@@ -4,9 +4,9 @@ class Controller_Welcome extends Controller {
 
 	public function action_index()
 	{
-            $url = $this->request->param('id');
+            $url = $this->request->uri();
             $page_model = new Model_Page();
-            echo $url.'url';
+            echo 'url'.$url.'url';
 //            $page = $page_model->get_page_by_url($url);
             
 //            echo Controller_Welcome::build_template('index.html',
