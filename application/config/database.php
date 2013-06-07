@@ -22,7 +22,7 @@ return array
 			'database'   => 'cmser',
 			'username'   => 'root',
 			'password'   => 'root',
-			'persistent' => TRUE
+			'persistent' => FALSE
 		),
 		'table_prefix' => '',
 		'charset'      => 'utf8',

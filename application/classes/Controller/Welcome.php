@@ -7,10 +7,10 @@ class Controller_Welcome extends Controller {
             $url = $this->request->uri();
             $page_model = new Model_Page();
             echo 'url'.$url.'url';
-//            $page = $page_model->get_page_by_url($url);
+            $page = $page_model->get_page_by_url($url);
             
-//            echo Controller_Welcome::build_template('index.html',
-//                    array('hello' => 'This is Kohana Twig integration.'));            
+            echo Controller_Welcome::build_template('index.html',
+                    array('hello' => 'This is Kohana Twig integration.'));            
 	}
         
         private static function build_template($template, array $values) 
