@@ -10,10 +10,9 @@ class Model_Page extends Model_Database
             INNER JOIN template t ON p.template_id = t.id
             WHERE p.uri = :uri');
         
-        $query->param(':url', $uri);
+        $query->param(':uri', $uri);
 
-        $pages =  $query->execute()->current();
-        $page = $pages[0];
+        $page = $query->execute()->current();
         
         $relation_query = DB::query(Database::SELECT, 'SELECT pf.title, 
                 ppf.page_field_content 

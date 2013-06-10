@@ -3,7 +3,8 @@
 class Controller_Welcome extends Controller {
     protected $twig;
     
-    function __construct(\Request $request, \Response $response) {
+    function __construct(\Request $request, \Response $response) 
+    {
         parent::__construct($request, $response);
         
         /* Initialize Twig Template Engine. */
@@ -19,9 +20,12 @@ class Controller_Welcome extends Controller {
         $url = $this->request->uri();
         $page_model = new Model_Page();
         $page = $page_model->get_page_by_uri($url);
-        //echo $page['filepath'];
-        echo Controller_Welcome::build_template($page['filepath'],
-                $page['fields']);            
+
+        $this->display_page($page);         
+    }
+    
+    private function display_page($page) {
+        echo $this->build_template($page['filepath'], $page['fields']);   
     }
 
     private function build_template($template, array $values) 
