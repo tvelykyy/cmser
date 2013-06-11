@@ -20,6 +20,8 @@ class Controller_Welcome extends Controller {
         $url = $this->request->uri();
         $page_model = new Model_Page();
         $page = $page_model->get_page_by_uri($url);
+        
+        $page_model->get_all_pages_uri();
 
         $this->display_page($page);         
     }
