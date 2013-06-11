@@ -17,17 +17,34 @@ class Controller_Welcome extends Controller {
     
     public function action_index()
     {
-        $url = $this->request->uri();
+        $uri = $this->request->uri();
         $page_model = new Model_Page();
-        $page = $page_model->get_page_by_uri($url);
-        
-        $page_model->get_all_pages_uri();
+        $page = $page_model->get_page_by_uri($uri);
 
+        $this->resolve_snippets($page->fields);
         $this->display_page($page);         
     }
     
+    private function resolve_snippets($fields)
+    {
+        foreach($fields as $field)
+        {
+            preg_match_all('/\\[\\[(.*?)\\]\\]/', $field->page_field_content, $matches);
+            foreach($matches[1] as $match)
+            {
+                $function_to_call = explode('.', $match);
+                $class = $function_to_call[0];
+                $method = $function_to_call[1];
+                
+                $obj = new $class;
+                $result = $obj->$method();
+                
+                preg_replace('/[['.$match.']]/', (string) $result,  $field->page_field_content, 1);
+            }
+        }
+    }
+    
     private function display_page($page) {
-        print_r($page->fields);
         echo $this->build_template($page->filepath, 
                 self::convert_field_array($page->fields));   
     }

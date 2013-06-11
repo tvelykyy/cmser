@@ -22,7 +22,6 @@ class Model_Page extends Model_Database
         $relation_query->param(':id', $page->id);
         
         $page->fields = $relation_query->as_object()->execute()->as_objects_array();
-        print_r($page);
         
         return $page;
     }
