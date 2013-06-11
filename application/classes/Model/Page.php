@@ -12,22 +12,18 @@ class Model_Page extends Model_Database
                 ->where('p.uri', '=', ':uri');
         $query->param(':uri', $uri);
 
-        $page = $query->execute()->current();
-        
-//        $relation_query = DB::query(Database::SELECT, 'SELECT pf.title, 
-//                ppf.page_field_content 
-//            FROM page_page_field ppf 
-//            INNER JOIN page_field pf ON ppf.page_field_id = pf.id
-//            WHERE page_id = :id');
+        $page = $query->as_object()->execute()->current();
+
         $relation_query = DB::select('pf.title', 'ppf.page_field_content')
                 ->from(array('page_page_field', 'ppf'))
                 ->join(array('page_field', 'pf'), 'INNER')
                 ->on('ppf.page_field_id', '=', 'pf.id')
                 ->where('page_id', '=', ':id');
-        $relation_query->param(':id', $page['id']);
+        $relation_query->param(':id', $page->id);
         
-        $page['fields'] = $relation_query->execute()->as_array('title', 'page_field_content');
+        $page->fields = $relation_query->as_object()->execute()->as_objects_array();
         print_r($page);
+        
         return $page;
     }
     
@@ -35,9 +31,10 @@ class Model_Page extends Model_Database
     {
         $uris = DB::select('uri')
                 ->from('page')
+                ->as_object()
                 ->execute()
                 ->as_objects_array();
-        
+
         return $uris;
     }
 }
