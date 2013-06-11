@@ -38,8 +38,9 @@ class Controller_Welcome extends Controller {
                 
                 $obj = new $class;
                 $result = $obj->$method();
-                
-                preg_replace('/[['.$match.']]/', (string) $result,  $field->page_field_content, 1);
+  
+                $field->page_field_content = 
+                        preg_replace('/\\[\\['.$match.'\\]\\]/', (string)$result,  $field->page_field_content);
             }
         }
     }
