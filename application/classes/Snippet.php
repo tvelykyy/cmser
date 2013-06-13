@@ -25,7 +25,6 @@ class Snippet
             $param_parsed = explode('=', $param);
             $this->params[$param_parsed[0]] = $param_parsed[1];
         }
-        
     }
     
     public function execute()

@@ -24,11 +24,12 @@ class Model_Page extends Model_Database
         return $page;
     }
     
-    public function get_all_pages_uri($id) 
+    public function get_all_pages_uri($above, $less) 
     {
         $uris = DB::select('uri')
                 ->from('page')
-                ->where('id', '<', $id)
+                ->where('id', '<', $less)
+                ->and_where('id', '>', $above)
                 ->as_object()
                 ->execute()
                 ->as_objects_array();
