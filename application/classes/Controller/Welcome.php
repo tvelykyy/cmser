@@ -29,18 +29,16 @@ class Controller_Welcome extends Controller {
     {
         foreach($fields as $field)
         {
-            preg_match_all('/\\[\\[(.*?)\\]\\]/', $field->page_field_content, $matches);
-            foreach($matches[1] as $match)
+            preg_match_all('/\\[\\[(.*?)\\]\\]/', $field->page_field_content, $snippets);
+            foreach($snippets[1] as $snippet_str)
             {
-                $function_to_call = explode('.', $match);
-                $class = $function_to_call[0];
-                $method = $function_to_call[1];
-                
-                $obj = new $class;
-                $result = $obj->$method();
+                $snippet = new Snippet($snippet_str);
+                $result = $snippet->execute();
   
                 $field->page_field_content = 
-                        preg_replace('/\\[\\['.$match.'\\]\\]/', (string)$result,  $field->page_field_content);
+                        preg_replace('/\\[\\['.preg_quote($snippet_str).'\\]\\]/', 
+                                print_r($result, true), 
+                                $field->page_field_content);
             }
         }
     }

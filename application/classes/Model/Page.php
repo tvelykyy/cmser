@@ -9,8 +9,7 @@ class Model_Page extends Model_Database
                 ->from(array('page', 'p'))
                 ->join(array('template', 't'), 'INNER')
                 ->on('p.template_id', '=', 't.id')
-                ->where('p.uri', '=', ':uri');
-        $query->param(':uri', $uri);
+                ->where('p.uri', '=', $uri);
 
         $page = $query->as_object()->execute()->current();
 
@@ -18,18 +17,18 @@ class Model_Page extends Model_Database
                 ->from(array('page_page_field', 'ppf'))
                 ->join(array('page_field', 'pf'), 'INNER')
                 ->on('ppf.page_field_id', '=', 'pf.id')
-                ->where('page_id', '=', ':id');
-        $relation_query->param(':id', $page->id);
+                ->where('page_id', '=', $page->id);
         
         $page->fields = $relation_query->as_object()->execute()->as_objects_array();
         
         return $page;
     }
     
-    public function get_all_pages_uri() 
+    public function get_all_pages_uri($id) 
     {
         $uris = DB::select('uri')
                 ->from('page')
+                ->where('id', '<', $id)
                 ->as_object()
                 ->execute()
                 ->as_objects_array();

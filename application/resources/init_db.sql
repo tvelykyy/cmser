@@ -10,13 +10,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50531
 File Encoding         : 65001
 
-Date: 2013-06-10 16:21:16
+Date: 2013-06-13 22:06:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `page`
+-- Table structure for page
 -- ----------------------------
 DROP TABLE IF EXISTS `page`;
 CREATE TABLE `page` (
@@ -34,7 +34,7 @@ INSERT INTO `page` VALUES ('1', '0', '/', '1');
 INSERT INTO `page` VALUES ('2', '1', '/news', '1');
 
 -- ----------------------------
--- Table structure for `page_field`
+-- Table structure for page_field
 -- ----------------------------
 DROP TABLE IF EXISTS `page_field`;
 CREATE TABLE `page_field` (
@@ -51,7 +51,7 @@ INSERT INTO `page_field` VALUES ('2', 'HEADER');
 INSERT INTO `page_field` VALUES ('3', 'FOOTER');
 
 -- ----------------------------
--- Table structure for `page_page_field`
+-- Table structure for page_page_field
 -- ----------------------------
 DROP TABLE IF EXISTS `page_page_field`;
 CREATE TABLE `page_page_field` (
@@ -67,11 +67,11 @@ CREATE TABLE `page_page_field` (
 -- ----------------------------
 -- Records of page_page_field
 -- ----------------------------
-INSERT INTO `page_page_field` VALUES ('1', '1', 'This is page content contained in CONTENT block.');
+INSERT INTO `page_page_field` VALUES ('1', '1', 'This is page content [[Model_Page.get_all_pages_uri?id=3]] contained in CONTENT block.');
 INSERT INTO `page_page_field` VALUES ('2', '1', 'This is news page.');
 
 -- ----------------------------
--- Table structure for `template`
+-- Table structure for template
 -- ----------------------------
 DROP TABLE IF EXISTS `template`;
 CREATE TABLE `template` (
