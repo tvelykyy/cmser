@@ -30,7 +30,7 @@ class Controller_Welcome extends Controller {
                 $filepath = $template_model->get_template_by_id($snippet->template_id)->filepath;
                 $snippet->filepath = $filepath;
                 $snippet->fields = $snippet->execute();                
-                
+
                 $result = Renderer::generate_html($snippet);
                 $field->page_field_content = 
                         preg_replace('/\\[\\['.preg_quote($snippet_str).'\\]\\]/', 

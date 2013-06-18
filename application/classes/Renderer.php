@@ -10,6 +10,7 @@ class Renderer {
         $loader = new Twig_Loader_Filesystem(APPPATH.'views');
         self::$twig = new Twig_Environment($loader, array(
             'cache' => /*APPPATH.'views/cache'*/false,
+            'autoescape' => false
         ));
     }    
      
@@ -45,8 +46,22 @@ class Renderer {
             $result_array = array();
             foreach ($fields_array as $field)
             {
-                $result_array[$field->title] = 
-                        $field->page_field_content;
+                if (isset($field->title))
+                {
+                    $result_array[$field->title] = $field->page_field_content;
+                }
+                else 
+                {
+                    foreach($field as $key => $value) 
+                    {
+                        if (!isset($result_array[$key.'s']))
+                        {
+                            $result_array[$key.'s'] = array();
+                        }                        
+                        array_push($result_array[$key.'s'], $value);
+                    }
+                }
+                
             }
             return $result_array;
         }
