@@ -12,14 +12,17 @@ class Model_Page extends Model_Database
                 ->where('p.uri', '=', $uri);
 
         $page = $query->as_object()->execute()->current();
+            
+        if ($page) 
+        {
+            $relation_query = DB::select('pf.title', 'ppf.page_field_content')
+                    ->from(array('page_page_field', 'ppf'))
+                    ->join(array('page_field', 'pf'), 'INNER')
+                    ->on('ppf.page_field_id', '=', 'pf.id')
+                    ->where('page_id', '=', $page->id);
 
-        $relation_query = DB::select('pf.title', 'ppf.page_field_content')
-                ->from(array('page_page_field', 'ppf'))
-                ->join(array('page_field', 'pf'), 'INNER')
-                ->on('ppf.page_field_id', '=', 'pf.id')
-                ->where('page_id', '=', $page->id);
-        
-        $page->fields = $relation_query->as_object()->execute()->as_objects_array();
+            $page->fields = $relation_query->as_object()->execute()->as_objects_array();
+        }
         
         return $page;
     }
