@@ -12,6 +12,7 @@ class Renderer {
             'cache' => /*APPPATH.'views/cache'*/false,
             'autoescape' => false
         ));
+        self::$twig->addGlobal("baseurl", '/cmser');
     }    
      
     public static function generate_html($page) 

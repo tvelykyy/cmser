@@ -2,11 +2,7 @@
 
 class Controller_Welcome extends Controller 
 {
-    function __construct(\Request $request, \Response $response) 
-    {
-        parent::__construct($request, $response);
-    }
-    
+
     public function action_index()
     {
         $uri = $this->request->uri();
