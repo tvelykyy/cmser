@@ -8,11 +8,11 @@ class Controller_Welcome extends Controller
         $uri = $this->request->uri();
         $page_model = new Model_Page();
         $page = $page_model->get_page_by_uri($uri);
-        
+
         if ($page)
         {
             Resolver_Snippet::resolve($page->fields);
-            echo Renderer::generate_html($page);
+            echo Renderer::convert_fields_and_generate_html($page);
         }
         else 
         {

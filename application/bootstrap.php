@@ -137,5 +137,7 @@ Route::set('dispatcher', '(<path>)', array('path' => '.*?'))
 		'action'     => 'index',
 	));
 
+Cookie::$salt = 'supercookiesalt';
+
 
 

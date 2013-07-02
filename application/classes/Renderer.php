@@ -14,13 +14,18 @@ class Renderer {
         ));
         self::$twig->addGlobal("baseurl", '/cmser');
     }    
-     
+    
     public static function generate_html($page) 
+    {
+        return self::build_template($page->filepath, $page->fields);   
+    }
+    
+    public static function convert_fields_and_generate_html($page) 
     {
         return self::build_template($page->filepath, 
                 self::convert_field_array($page->fields));   
     }
-
+    
     public static function build_template($template, array $values) 
     {   
         if (self::$twig == null) 
@@ -37,7 +42,6 @@ class Renderer {
      * to 
      * Array ( [MAIN_CONTENT] = > some text.
      * @param type $fields_array
-     * @return null
      */
     /* TODO move this out. */
     private static function convert_field_array($fields_array)
@@ -45,13 +49,14 @@ class Renderer {
         if (is_array($fields_array))
         {
             $result_array = array();
-            foreach ($fields_array as $field)
+            
+            foreach ($fields_array as $index => $field)
             {
                 if (isset($field->title))
                 {
                     $result_array[$field->title] = $field->page_field_content;
                 }
-                else 
+                else if (is_array($field))                    
                 {
                     foreach($field as $key => $value) 
                     {
@@ -62,7 +67,10 @@ class Renderer {
                         array_push($result_array[$key.'s'], $value);
                     }
                 }
-                
+                else
+                {
+                    $result_array[$index] = $field;
+                }
             }
             return $result_array;
         }

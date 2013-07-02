@@ -1,0 +1,41 @@
+{% extends "admin/skeleton.html" %}
+
+{% block main_content %}
+
+<div class="box-content">
+    <table class="table table-striped">
+        <thead>
+            {{pages}}
+            <tr>
+                <th>Id</th>
+                <th>Parent Id</th>
+                <th>Uri</th>
+                <th>Template Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for page in pages %}
+            <tr>
+                <td>{{ page.id }}</td>
+                <td class="center">{{ page.parent_id }}</td>
+                <td class="center">{{ page.uri }}</td>
+                <td class="center">{{ page.template_id }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination pagination-centered">
+        <ul>
+            <li>
+                <a href="#">Prev</a>
+            </li>
+            <li class="active">
+                <a href="#">1</a>
+            </li>
+            <li>
+                <a href="#">Next</a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

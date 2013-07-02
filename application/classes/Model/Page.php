@@ -39,4 +39,16 @@ class Model_Page extends Model_Database
 
         return $uris;
     }
+    
+    public function get_pages_with_limit($limit)
+    {
+        $uris = DB::select('id', 'parent_id', 'uri', 'template_id')
+                ->from('page')
+                ->limit($limit)
+                ->as_object()
+                ->execute()
+                ->as_objects_array();
+
+        return $uris;
+    }
 }
