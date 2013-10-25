@@ -41,7 +41,6 @@ class Renderer {
      * Array ( [0] => stdClass Object ( [title] => MAIN_CONTENT [page_field_content] => some text. ) )
      * to 
      * Array ( [MAIN_CONTENT] = > some text.
-     * @param type $fields_array
      */
     /* TODO move this out. */
     private static function convert_field_array($fields_array)
