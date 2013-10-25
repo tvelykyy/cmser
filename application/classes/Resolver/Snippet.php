@@ -17,11 +17,16 @@ class Resolver_Snippet
                 $snippet->filepath = $filepath;
                 $snippet->fields = $snippet->execute();                
 
-                $result = Renderer::convert_fields_and_generate_html($snippet);
-                $field->page_field_content = 
-                        preg_replace('/\\[\\['.preg_quote($snippet_str).'\\]\\]/', 
-                                $result, 
-                                $field->page_field_content);
+                $result = Generator_Html::generate_html_by_filepath_and_params(
+                    $snippet->filepath,
+                    array('params' => $snippet->fields)
+                );
+
+                $field->page_field_content = preg_replace(
+                    '/\\[\\['.preg_quote($snippet_str).'\\]\\]/',
+                    $result,
+                    $field->page_field_content
+                );
             }
         }
     }
