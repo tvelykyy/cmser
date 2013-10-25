@@ -1,3 +1,4 @@
 nbproject
 application/logs
-application/views/cache/
+application/views/cache
+.idea
