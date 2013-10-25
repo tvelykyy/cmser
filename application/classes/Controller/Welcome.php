@@ -6,8 +6,7 @@ class Controller_Welcome extends Controller
     public function action_index()
     {
         $uri = $this->request->uri();
-        $page_model = new Model_Page();
-        $page = $page_model->get_page_by_uri($uri);
+        $page = Model_Page::get_page_by_uri($uri);
 
         if ($page)
         {
@@ -35,7 +34,7 @@ class Controller_Welcome extends Controller
         {
             $result_array = array();
 
-            foreach ($fields_array as $index => $field)
+            foreach ($fields_array as $field)
             {
                 if (isset($field->title))
                 {

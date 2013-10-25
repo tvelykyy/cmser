@@ -3,29 +3,21 @@
 class Resolver_Snippet
 {
     
-    public static function resolve($fields)
+    public static function resolve($blocks)
     {
-        foreach($fields as $field)
+        foreach($blocks as $block)
         {            
-            preg_match_all('/\\[\\[(.*?)\\]\\]/', $field->page_field_content, $snippets);
-            /* $snippets[0] returns match like this [[(.*?)]], we need (.*?). */
+            preg_match_all('/\\[\\[(.*?)\\]\\]/', $block->page_field_content, $snippets);
+            /* $snippets[0] returns match like this [[(.*?)]], we need (.*?)., so we take [1] */
             foreach($snippets[1] as $snippet_str)
             {
                 $snippet = new Snippet($snippet_str);
-                $template_model = new Model_Template();
-                $filepath = $template_model->get_template_by_id($snippet->template_id)->filepath;
-                $snippet->filepath = $filepath;
-                $snippet->fields = $snippet->execute();                
+                $result = $snippet->generate_html();
 
-                $result = Generator_Html::generate_html_by_filepath_and_params(
-                    $snippet->filepath,
-                    array('params' => $snippet->fields)
-                );
-
-                $field->page_field_content = preg_replace(
+                $block->page_field_content = preg_replace(
                     '/\\[\\['.preg_quote($snippet_str).'\\]\\]/',
                     $result,
-                    $field->page_field_content
+                    $block->page_field_content
                 );
             }
         }
