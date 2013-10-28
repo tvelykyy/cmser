@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Helper_Array extends Controller
+class Helper_Array
 {
     /**
      * Converts example array
