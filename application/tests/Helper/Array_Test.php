@@ -5,7 +5,7 @@ class Helper_Array_Test extends Unittest_TestCase
 
     function test_correct_conversion()
     {
-        /* Given */
+        /* Given. */
         $array_to_convert = array();
 
         $array_object_1 = new stdClass;
@@ -19,10 +19,10 @@ class Helper_Array_Test extends Unittest_TestCase
         array_push($array_to_convert, $array_object_1);
         array_push($array_to_convert, $array_object_2);
 
-        /* When */
+        /* When. */
         $actual_array = Helper_Array::convert_array_to_associative_array_for_page($array_to_convert);
 
-        /* Then */
+        /* Then. */
         $this->assertNotEmpty($actual_array);
         $this->assertCount(2, $actual_array);
 
@@ -35,19 +35,19 @@ class Helper_Array_Test extends Unittest_TestCase
 
     function test_returning_null_if_not_array()
     {
-        /* Given */
+        /* Given. */
         $obj_to_pass = new stdClass;
 
-        /* When */
+        /* When. */
         $actual_result = Helper_Array::convert_array_to_associative_array_for_page($obj_to_pass);
 
-        /* Then */
+        /* Then. */
         $this->assertNull($actual_result);
     }
 
     function test_returning_empty_array_if_array_with_title_property_passed()
     {
-        /* Given */
+        /* Given. */
         $array_to_pass = array();
         $array_object_1 = new stdClass();
         $array_object_1->other_title = 'DummyOtherTitle1';
@@ -55,23 +55,23 @@ class Helper_Array_Test extends Unittest_TestCase
 
         array_push($array_to_pass, $array_object_1);
 
-        /* When */
+        /* When. */
         $actual_array = Helper_Array::convert_array_to_associative_array_for_page($array_to_pass);
 
-        /* Then */
+        /* Then. */
         $this->assertNotNull($actual_array);
         $this->assertEmpty($actual_array);
     }
 
     function test_returning_empty_array_if_empty_array_passed()
     {
-        /* Given */
+        /* Given. */
         $array_to_pass = array();
 
-        /* When */
+        /* When. */
         $actual_array = Helper_Array::convert_array_to_associative_array_for_page($array_to_pass);
 
-        /* Then */
+        /* Then. */
         $this->assertNotNull($actual_array);
         $this->assertEmpty($actual_array);
     }
