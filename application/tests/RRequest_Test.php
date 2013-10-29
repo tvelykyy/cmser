@@ -7,7 +7,7 @@ class Request_Test extends Unittest_TestCase
     {
         /* Given. */
         $uri_to_set = '';
-        $request = new Request();
+        $request = Request::factory();
 
         /* When. */
 
