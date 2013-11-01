@@ -3,7 +3,7 @@ defined('SYSPATH') or die('No direct script access.');
 
 class Model_Page extends Model_Database
 {
-    public static function get_page_by_uri($uri)
+    public function get_page_by_uri($uri)
     {
         $query = DB::select('p.id', 't.filepath')
                 ->from(array('page', 'p'))
@@ -27,7 +27,7 @@ class Model_Page extends Model_Database
         return $page;
     }
     
-    public static function get_all_pages_uri($above, $less)
+    public function get_all_pages_uri($above, $less)
     {
         $uris = DB::select('uri')
                 ->from('page')
@@ -40,7 +40,7 @@ class Model_Page extends Model_Database
         return $uris;
     }
     
-    public static function get_pages_with_limit($limit)
+    public function get_pages_with_limit($limit)
     {
         $uris = DB::select('id', 'parent_id', 'uri', 'template_id')
                 ->from('page')
