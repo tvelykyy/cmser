@@ -14,11 +14,12 @@ class Snippet
         
         /* Parsing object and method. */
         $snippet_definition = explode('.', $snippet_parts[0]);
-        $this->class = $snippet_definition[0];
+        $this->class = new $snippet_definition[0];
         $this->method = $snippet_definition[1];
 
         $template_id = $snippet_definition[2];
-        $this->filepath = Model_Template::get_template_by_id($template_id)->filepath;
+        $model_template = new Model_Template();
+        $this->filepath = $model_template->get_template_by_id($template_id)->filepath;
 
         /* Parsing params */
         $params_parsed = explode('&', $snippet_parts[1]);
