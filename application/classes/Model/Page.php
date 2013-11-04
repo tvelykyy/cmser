@@ -11,7 +11,7 @@ class Model_Page extends Model_Database
                 ->on('p.template_id', '=', 't.id')
                 ->where('p.uri', '=', $uri);
 
-        $page = $query->as_object()->execute()->current();
+        $page = $query->as_object()->execute($this->_db)->current();
             
         if ($page) 
         {
@@ -21,7 +21,7 @@ class Model_Page extends Model_Database
                     ->on('ppf.page_field_id', '=', 'pf.id')
                     ->where('page_id', '=', $page->id);
 
-            $page->fields = $relation_query->as_object()->execute()->as_objects_array();
+            $page->fields = $relation_query->as_object()->execute($this->_db)->as_objects_array();
         }
         
         return $page;
@@ -34,7 +34,7 @@ class Model_Page extends Model_Database
                 ->where('id', '<', $less)
                 ->and_where('id', '>', $above)
                 ->as_object()
-                ->execute()
+                ->execute($this->_db)
                 ->as_objects_array();
 
         return $uris;
@@ -46,7 +46,7 @@ class Model_Page extends Model_Database
                 ->from('page')
                 ->limit($limit)
                 ->as_object()
-                ->execute()
+                ->execute($this->_db)
                 ->as_objects_array();
 
         return $uris;
