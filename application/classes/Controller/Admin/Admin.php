@@ -14,7 +14,8 @@ class Controller_Admin_Admin extends Controller
     public function action_pages()
     {
         $limit = $this->get_query_or_default_value('limit', 2);
-        $pages = Model_Page::get_pages_with_limit($limit);
+        $page_model = new Model_Page();
+        $pages = $page_model->get_pages($limit);
         $page = self::init_page('admin/pages.html', 
                 array('title' => 'Site Pages',
                     'pages' => $pages));

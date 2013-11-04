@@ -9,9 +9,10 @@ class Model_Page extends Model_Database
                 ->from(array('page', 'p'))
                 ->join(array('template', 't'), 'INNER')
                 ->on('p.template_id', '=', 't.id')
-                ->where('p.uri', '=', $uri);
+                ->where('p.uri', '=', $uri)
+                ->as_object();
 
-        $page = $query->as_object()->execute($this->_db)->current();
+        $page = $query->execute($this->_db)->current();
             
         if ($page) 
         {
@@ -19,9 +20,10 @@ class Model_Page extends Model_Database
                     ->from(array('page_page_field', 'ppf'))
                     ->join(array('page_field', 'pf'), 'INNER')
                     ->on('ppf.page_field_id', '=', 'pf.id')
-                    ->where('page_id', '=', $page->id);
+                    ->where('page_id', '=', $page->id)
+                    ->as_object();
 
-            $page->fields = $relation_query->as_object()->execute($this->_db)->as_objects_array();
+            $page->fields = $relation_query->execute($this->_db)->as_objects_array();
         }
         
         return $page;
@@ -40,10 +42,11 @@ class Model_Page extends Model_Database
         return $uris;
     }
     
-    public function get_pages_with_limit($limit)
+    public function get_pages($offset = 0, $limit = 1)
     {
         $uris = DB::select('id', 'parent_id', 'uri', 'template_id')
                 ->from('page')
+                ->offset($offset)
                 ->limit($limit)
                 ->as_object()
                 ->execute($this->_db)
