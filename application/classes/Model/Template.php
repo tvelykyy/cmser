@@ -7,8 +7,9 @@ class Model_Template extends Model_Database
     {
         $query = DB::select('id', 'title', 'filepath')
                 ->from('template')
-                ->where('id', '=', $id);
+                ->where('id', '=', $id)
+                ->as_object();
 
-        return $query->as_object()->execute($this->_db)->current();
+        return $query->execute($this->_db)->current();
     }
 }
