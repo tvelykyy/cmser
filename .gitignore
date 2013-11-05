@@ -2,3 +2,5 @@ nbproject
 application/logs
 application/views/cache
 .idea
+application/tests/report
+application/tests/~
