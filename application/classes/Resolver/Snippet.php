@@ -2,7 +2,6 @@
 
 class Resolver_Snippet
 {
-    
     public static function resolve($blocks)
     {
         foreach($blocks as $block)
@@ -11,7 +10,7 @@ class Resolver_Snippet
             /* $snippets[0] returns match like this [[(.*?)]], we need (.*?)., so we take [1] */
             foreach($snippets[1] as $snippet_str)
             {
-                $snippet = new Snippet($snippet_str);
+                $snippet = Snippet::from_string($snippet_str);
                 $result = $snippet->generate_html();
 
                 $block->page_field_content = preg_replace(

@@ -3,7 +3,7 @@
 class Generator_Html {
     protected static $twig;
 
-    private static function initialize()
+    private static function initialize_twig()
     {
         /* Initialize Twig Template Engine. */
         Twig_Autoloader::register();
@@ -24,7 +24,7 @@ class Generator_Html {
     {
         if (self::$twig == null)
         {
-            self::initialize();
+            self::initialize_twig();
         }
         $template = self::$twig->loadTemplate($template);
         return $template->render($values);
