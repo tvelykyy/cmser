@@ -60,4 +60,25 @@ class Snippet
         $this->model_template = $model_template;
     }
 
+    public function get_model()
+    {
+        return $this->method;
+    }
+
+    public function get_params()
+    {
+        return $this->params;
+    }
+
+    public function get_filepath()
+    {
+        return $this->filepath;
+    }
+
+    public function get_method()
+    {
+        return $this->method;
+    }
+
+
 } // End Snippet
