@@ -133,7 +133,7 @@ Route::set('admin', 'admin(/<action>(/<ide>))')
 
 Route::set('dispatcher', '(<path>)', array('path' => '.*?'))
 	->defaults(array(
-		'controller' => 'welcome',
+		'controller' => 'dispatcher',
 		'action'     => 'index',
 	));
 
