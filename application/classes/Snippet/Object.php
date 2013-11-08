@@ -1,12 +1,12 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Snippet 
+class Snippet_Object
 {
     private $model;
     private $method;
-    private $filepath;
+    private $template_id;
     private $params = array();
-    private $model_template;
+    private $generator_html;
 
     public static function from_string($str)
     {
@@ -29,7 +29,7 @@ class Snippet
             $params[$param_value[0]] = $param_value[1];
         }
 
-        return new Snippet($model, $method, $template_id, $params);
+        return new Snippet_Object($model, $method, $template_id, $params);
     }
 
     public function __construct($model, $method, $template_id, $params)
@@ -37,32 +37,36 @@ class Snippet
         $this->model = $model;
         $this->method = $method;
         $this->params = $params;
-
-        $this->model_template = new Model_Template();
-        $this->filepath = $this->model_template->get_template_by_id($template_id)->filepath;
+        $this->template_id = $template_id;
+        $this->generator_html = new Generator_Html();
     }
 
     public function generate_html()
     {
-        $fields = $this->execute();
-        $html = Generator_Html::generate_html_by_filepath_and_params($this->filepath, array('params' => $fields));
+        $fields = $this->execute_method();
+        $html = $this->generator_html->generate_html_by_template_id_and_params($this->template_id, array('params' => $fields));
 
         return $html;
     }
 
-    private function execute()
+    private function execute_method()
     {
         return call_user_func_array(array($this->model, $this->method), $this->params);
     }
 
-    public function set_model_template($model_template)
+    public function set_generator_html(Generator_Html $generator_html)
     {
-        $this->model_template = $model_template;
+        $this->generator_html = $generator_html;
+    }
+
+    public function set_model(Model_Page $model)
+    {
+        $this->model = $model;
     }
 
     public function get_model()
     {
-        return $this->method;
+        return $this->model;
     }
 
     public function get_params()
@@ -70,9 +74,9 @@ class Snippet
         return $this->params;
     }
 
-    public function get_filepath()
+    public function get_template_id()
     {
-        return $this->filepath;
+        return $this->template_id;
     }
 
     public function get_method()

@@ -2,13 +2,20 @@
 
 class Controller_Admin_Admin extends Controller 
 {
+    private $generator_html;
+
+    public function __construct(Request $request, Response $response)
+    {
+        parent::__construct($request, $response);
+        $this->generator_html = new Generator_Html();
+    }
 
     public function action_login()
     {
         $page = new stdClass();
         $page->filepath = 'admin/skeleton.html';
         $page->fields = array();
-        echo Generator_Html::generate_html_by_filepath_and_params($page->filepath, $page->fields);
+        echo $this->generator_html->generate_html_by_filepath_and_params($page->filepath, $page->fields);
     }
     
     public function action_pages()
@@ -20,7 +27,7 @@ class Controller_Admin_Admin extends Controller
                 array('title' => 'Site Pages',
                     'pages' => $pages));
 
-        echo Generator_Html::generate_html_by_filepath_and_params($page->filepath, $page->fields);
+        echo $this->generator_html->generate_html_by_filepath_and_params($page->filepath, $page->fields);
     }
     
     private static function init_page($filepath, array $fields)
