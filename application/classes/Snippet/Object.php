@@ -8,7 +8,7 @@ class Snippet_Object
     private $params = array();
     private $generator_html;
 
-    public static function from_string($str)
+    public static function from_string($str, $client_params = NULL)
     {
         /* [[model.method.template_id?param1=value1&param2=value2...]] */
         $tokens = explode('?', $str);
@@ -25,8 +25,16 @@ class Snippet_Object
 
         foreach($param_value_pairs as $pair)
         {
-            $param_value = explode('=', $pair);
-            $params[$param_value[0]] = $param_value[1];
+            $param_and_value = explode('=', $pair);
+            $key = $param_and_value[0];
+            $value = $param_and_value[1];
+
+            /* Initialize generic snippet params with client values. */
+            if (preg_match('/^\{.*\}$/', $value) && count($client_params) > 0)
+            {
+                $value = $client_params[$key];
+            }
+            $params[$key] = $value;
         }
 
         return new Snippet_Object($model, $method, $template_id, $params);

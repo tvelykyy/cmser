@@ -3,7 +3,7 @@
 class Snippet_Resolver
 {
 
-    public function resolve_snippets($blocks)
+    public function resolve_snippets($blocks, $client_params = NULL)
     {
         $resolved_blocks = array();
         foreach($blocks as $block)
@@ -12,7 +12,7 @@ class Snippet_Resolver
 
             foreach ($snippets_str as $snippet_str)
             {
-                $snippet = Snippet_Object::from_string($snippet_str);
+                $snippet = Snippet_Object::from_string($snippet_str, $client_params);
                 $html = $snippet->generate_html();
 
                 $block->page_field_content = preg_replace(

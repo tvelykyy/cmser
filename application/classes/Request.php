@@ -14,4 +14,9 @@ class Request extends Kohana_Request
 
         return $this;
     }
+
+    public function query_params()
+    {
+        return $this->_get;
+    }
 } // End Request

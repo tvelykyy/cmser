@@ -19,18 +19,19 @@ class Controller_Dispatcher extends Controller
     public function action_index()
     {
         $uri = $this->request->uri();
+        $query_params = $this->request->query_params();
         $page = $this->model_page->get_page_by_uri($uri);
 
         if ($page)
         {
-            $page->fields = $this->snippet_resolver->resolve_snippets($page->fields);
+            $page->fields = $this->snippet_resolver->resolve_snippets($page->fields, $query_params);
             $page->fields = Helper_Array::convert_array_to_associative_array_for_page($page->fields);
 
             echo $this->generator_html->generate_html_by_filepath_and_params($page->filepath, $page->fields);
         }
         else 
         {
-            throw new Kohana_HTTP_Exception_404();
+            throw new Kohana_HTTP_Exception_404('Page not found');
         }
     }
 

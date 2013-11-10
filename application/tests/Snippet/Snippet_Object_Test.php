@@ -19,6 +19,22 @@ class Snippet_Object_Test extends Unittest_TestCase
         $this->assertEquals(array('above' => 0, 'less' => 3), $snippet->get_params());
     }
 
+    function test_from_string_with_client_params()
+    {
+        /* Given. */
+        $snippet_str = 'Model_Page.get_all_pages_uri.1?above={above}&less={less}';
+
+        /* When. */
+        $snippet = Snippet_Object::from_string($snippet_str, array('above' =>  10, 'less' => 15));
+
+        /* Then. */
+        $this->assertNotNull($snippet);
+        $this->assertEquals(get_class(new Model_Page()), get_class($snippet->get_model()));
+        $this->assertEquals('get_all_pages_uri', $snippet->get_method());
+        $this->assertEquals(1, $snippet->get_template_id());
+        $this->assertEquals(array('above' => 10, 'less' => 15), $snippet->get_params());
+    }
+
     function test_generate_html()
     {
         /* Given. */
