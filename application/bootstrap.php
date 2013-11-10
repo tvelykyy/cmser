@@ -91,8 +91,8 @@ if (isset($_SERVER['KOHANA_ENV']))
  */
 Kohana::init(array(
 	'base_url'   => '/cmser',
-        'errors'     => TRUE,
-        'index_file'    => FALSE
+    'errors' => TRUE,
+    'index_file' => FALSE
 ));
 
 /**

@@ -24,6 +24,7 @@ class Generator_Html {
             'autoescape' => false
         ));
         $this->twig->addGlobal('baseurl', '/cmser');
+        $this->twig->addGlobal('baseurl_static', '/cmser/static/');
     }
 
     public function generate_html_by_template_id_and_params($template_id, array $params)

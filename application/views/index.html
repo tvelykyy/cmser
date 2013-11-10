@@ -1,11 +1,144 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>{{HEADER}}</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <div>{{MAIN_CONTENT}}</div>
-        <div>{{FOOTER}}</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title>Заголовок страницы</title>
+    <meta name="keywords" content="ключевые слова" />
+    <meta name="description" content="Описание страницы" />
+    <link rel="stylesheet" href="{{ baseurl_static }}css/style.css" type="text/css" media="all" />
+</head>
+<body>
+
+<div id="wrapper">
+
+    <header id="header">
+        <a class="logo" href="/">
+            <img src="{{ baseurl_static }}images/logo.png" alt="bendiks.lviv.ua" />
+            <span>ремонт <em>стартерів</em> та <em>генераторів</em></span>
+        </a>
+
+        <div class="h-phone">
+            <div class="h-label">телефон у Львові:</div>
+            <div class="phone-number"><span class="phone-index">(097) </span>540-12-23</div>
+        </div>
+
+        <div class="h-work">
+            <div class="h-label">ми працюємо:</div>
+            <span class="work-time">з 9.00 до 19.00</span>
+			<span class="work-days">
+				<img src="{{ baseurl_static }}images/day-work.png" alt="" />
+				<img src="{{ baseurl_static }}images/day-work.png" alt="" />
+				<img src="{{ baseurl_static }}images/day-work.png" alt="" />
+				<img src="{{ baseurl_static }}images/day-work.png" alt="" />
+				<img src="{{ baseurl_static }}images/day-work.png" alt="" />
+				<img src="{{ baseurl_static }}images/day-off.png" alt="" />
+				<img src="{{ baseurl_static }}images/day-off.png" alt="" />
+			</span>
+        </div>
+
+        <div class="form-search">
+            <form action="#" method="post">
+                <label>пошук по сайту:</label>
+                <input type="text" value="" />
+                <input type="submit" value="" />
+            </form>
+        </div>
+
+        <div class="h-address">
+            <span class="h-label">адреса:</span>
+            <span class="address-line">м. Львів, вул. Шевченка, 1</span>
+            <a class="address-map" href="#">на карті</a>
+            <a class="link-sitemap" href="#"><img src="{{ baseurl_static }}images/icon-sitemap.png" alt="" /></a>
+        </div>
+    </header><!-- #header-->
+
+    <section id="middle">
+
+        <div id="container">
+            <div id="content">
+                <ul class="breadcrumbs">
+                    <li><a href="#"><img src="{{ baseurl_static }}images/breadcrumbs-home.png" alt="" /></a></li>
+                    <li><a href="#">Про компанію</a></li>
+                    <li><span>Чим ми займаємося</span></li>
+                </ul>
+
+                <h1>пару слів про компанію</h1>
+
+                {{MAIN_CONTENT}}
+
+                <div class="clear"></div>
+
+            </div><!-- #content-->
+        </div><!-- #container-->
+
+        <aside id="sideLeft">
+            <ul class="sidemenu">
+                <li class="active"><a href="#">головна</a></li>
+                <li class="parent"><a href="#">ПОСЛУГИ</a>
+                    <ul>
+                        <li><a href="#">замена бендикса (привода)</a></li>
+                        <li><a href="#">замена втулок</a></li>
+                        <li><a href="#">замена щеток</a></li>
+                        <li><a href="#">замена щеткодержателей</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Ціни</a></li>
+                <li><a href="#">Виробники запчастин</a></li>
+                <li><a href="#">Каталог запчастин</a></li>
+                <li><a href="#">Статті</a></li>
+                <li><a href="#">КОНТАКТИ</a></li>
+            </ul>
+
+            <h3>Статті по темі Статті по темі Статті по темі</h3>
+            <div class="news-item">
+                <a href="#">На склад надійшли обгінні шківи генератора виробництва INA 535017510 ...</a>
+            </div>
+
+            <div class="news-item">
+                <a href="#">На склад надійшли обгінні шківи генератора виробництва </a>
+            </div>
+
+            <div class="news-item">
+                <a href="#">Съемник обгонных шкивов генератора 210843 ...</a>
+            </div>
+
+            <div class="news-item">
+                <a href="#">На склад надійшли обгінні шківи генератора виробництва INA 535017510 ...</a>
+            </div>
+
+            <div class="more"><a href="#">Всі статті</a></div>
+        </aside><!-- #sideLeft -->
+
+    </section><!-- #middle-->
+
+</div><!-- #wrapper -->
+
+<footer id="footer">
+    <div id="footer-inner">
+        <div class="copyright">
+            <p>Всі права захищені.</p>
+            <p>(с) 2013 <a href="#">bendiks.lviv.ua</a></p>
+        </div>
+
+        <div class="counters">
+            <a href="#"><img src="{{ baseurl_static }}images/counter1.png" alt="" /></a>
+
+            <a href="#"><img src="{{ baseurl_static }}images/counter2.png" alt="" /></a>
+        </div>
+
+        <div class="h-phone">
+            <div class="h-label">телефон:</div>
+            <div class="phone-number"><span class="phone-index">(097) </span>540-12-23</div>
+        </div>
+
+        <div class="h-address">
+            <span class="h-label">адреса:</span>
+            <span class="address-line">м. Львів, вул. Шевченка, 1</span>
+            <a class="address-map" href="#">на карті</a>
+        </div>
+    </div><!-- #footer-inner -->
+</footer><!-- #footer -->
+
+</body>
 </html>
