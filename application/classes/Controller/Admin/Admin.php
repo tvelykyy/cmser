@@ -20,7 +20,7 @@ class Controller_Admin_Admin extends Controller
     
     public function action_pages()
     {
-        $limit = $this->param('limit', 2);
+        $limit = $this->get_query_value_or_default_value('limit', 2);
         $page_model = new Model_Page();
         $pages = $page_model->get_pages(0, $limit);
         $page = self::init_page('admin/pages.html', 
@@ -36,6 +36,17 @@ class Controller_Admin_Admin extends Controller
         $page->filepath = $filepath;
         $page->fields = $fields;
         return $page;
+    }
+
+    private function get_query_value_or_default_value($param, $default)
+    {
+        $query_param = $this->request->query($param);
+        if($query_param == NUll)
+        {
+            $query_param = $default;
+        }
+
+        return $query_param;
     }
    
 }
