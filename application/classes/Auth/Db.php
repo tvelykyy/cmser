@@ -7,11 +7,20 @@ class Auth_Db extends Auth
     private $model_user;
     private $model_user_token;
 
-    public function __construct($config = array())
+    public function __construct($config = array(), Model_User $model_user = null, Model_UserToken $model_user_token = null)
     {
         parent::__construct($config);
-        $this->model_user = new Model_User();
-        $this->model_user_token = new Model_UserToken();
+        if (!isset($model_user))
+        {
+            $model_user = new Model_User();
+        }
+        $this->model_user = $model_user;
+
+        if (!isset($model_user_token))
+        {
+            $model_user_token = new Model_UserToken();
+        }
+        $this->model_user_token = $model_user_token;
     }
 
     protected function _login($email, $password, $remember)
@@ -26,7 +35,7 @@ class Auth_Db extends Auth
     {
         if ($user !== NULL) {
             if ($remember === TRUE) {
-                $token = $this->generate_and_save_token_for_user($user);
+                $token = $this->generate_and_save_token_for_user($user->email);
                 $this->set_auth_cookie($token);
             }
             // Finish the login
