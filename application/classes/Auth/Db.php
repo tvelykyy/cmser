@@ -2,6 +2,8 @@
 
 class Auth_Db extends Auth
 {
+    const AUTH_COOKIE_NAME = 'authautologin';
+
     private $model_user;
     private $model_user_token;
 
@@ -24,8 +26,8 @@ class Auth_Db extends Auth
     {
         if ($user !== NULL) {
             if ($remember === TRUE) {
-                $token = $this->generate_and_save_token($user);
-                $this->create_cookie_for_user($token);
+                $token = $this->generate_and_save_token_for_user($user);
+                $this->set_auth_cookie($token);
             }
             // Finish the login
             $this->complete_login($user);
@@ -36,11 +38,10 @@ class Auth_Db extends Auth
         return FALSE;
     }
 
-    protected function generate_and_save_token($user)
+    protected function generate_and_save_token_for_user($user_email)
     {
         $expires = time() + $this->_config['lifetime'];
         $encoded_user_agent = $this->get_encoded_user_agent();
-        $user_email = $user->email;
         $token = $this->generate_token($user_email);
 
         $this->model_user_token->insert_token($user_email, $encoded_user_agent, $token, $expires);
@@ -53,9 +54,9 @@ class Auth_Db extends Auth
         return sha1((uniqid($unique_user_data, true)));
     }
 
-    protected function create_cookie_for_user($token)
+    protected function set_auth_cookie($token)
     {
-        Cookie::set('authautologin', $token, $this->_config['lifetime']);
+        Cookie::set(self::AUTH_COOKIE_NAME, $token, $this->_config['lifetime']);
     }
 
     public function get_user()
@@ -71,32 +72,31 @@ class Auth_Db extends Auth
 
     public function auto_login_by_cookie()
     {
-        if ($token = Cookie::get('authautologin'))
+        if ($token = Cookie::get(self::AUTH_COOKIE_NAME))
         {
-            // Load the token and user
             $user_token = $this->model_user_token->get_by_token($token);
 
             if ($user_token != NULL && $user_token->user_agent === $this->get_encoded_user_agent())
             {
-                $this->model_user_token->delete_by_id($user_token->id);
+                $user = $this->set_updated_cookie($user_token);
 
-                // Save the token to create a new unique token
-                $user = $this->model_user->get_user_by_email($user_token->user_email);
-                $new_token = $this->generate_token($user->email);
-                $this->model_user_token->insert_token($user_token->user_email, $user_token->user_agent,
-                    $new_token, time() + $this->_config['lifetime']);
-
-                // Set the new token
-                Cookie::set('authautologin', $new_token, $this->_config['lifetime']);
-
-                // Complete the login with the found data
-                $this->complete_login($user);
-
-                // Automatic login was successful
                 return $user;
             }
         }
         return NULL;
+    }
+
+    protected function set_updated_cookie($user_token)
+    {
+        $this->model_user_token->delete_by_id($user_token->id);
+
+        $new_token = $this->generate_and_save_token_for_user($user_token->user_email);
+
+        $this->set_auth_cookie($new_token);
+
+        $user = $this->model_user->get_user_by_email($user_token->user_email);
+        $this->complete_login($user);
+        return $user;
     }
 
     private function get_encoded_user_agent()
@@ -106,12 +106,9 @@ class Auth_Db extends Auth
 
     public function logout($destroy = FALSE)
     {
-        $this->_session->delete('auth_forced');
-
-        if ($token = Cookie::get('authautologin'))
+        if ($token = Cookie::get(self::AUTH_COOKIE_NAME))
         {
-            Cookie::delete('authautologin');
-            // Clear the autologin token from the database
+            Cookie::delete(self::AUTH_COOKIE_NAME);
             $this->model_user_token->delete_by_token($token);
         }
 
