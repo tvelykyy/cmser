@@ -37,7 +37,7 @@ class Request_Test extends Unittest_TestCase
 
         /* When. */
         $actual_request = $request->uri($uri_to_set);
-        
+
         /* Then. */
         $this->assertEquals(get_class($request), get_class($actual_request));
     }

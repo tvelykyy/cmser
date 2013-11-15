@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50534
 File Encoding         : 65001
 
-Date: 2013-11-04 23:40:56
+Date: 2013-11-15 18:35:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -90,3 +90,23 @@ CREATE TABLE `template` (
 -- ----------------------------
 INSERT INTO `template` VALUES ('1', 'Main Template', 'index.html');
 INSERT INTO `template` VALUES ('2', 'Uris', 'snippet/uris.html');
+
+-- ----------------------------
+-- Table structure for `user`
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `email` varchar(127) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  `username` varchar(32) NOT NULL DEFAULT '',
+  `enabled` bit(1) NOT NULL DEFAULT b'0',
+  `last_login` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`email`),
+  UNIQUE KEY `uniq_username` (`username`) USING BTREE,
+  UNIQUE KEY `uniq_email` (`email`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('dummy@mail.com', '0f0a9a777952ceb5b629ec5a901df612c7bf2cd66a63ef2d80228d5557ca8dca', 'Dummy', '', null);
