@@ -31,7 +31,6 @@ class Auth_Db_Test extends Unittest_TestCase
 
         /* Then. */
         $this->assertEquals(true, $is_logged);
-        print_r(Cookie::get(Auth_Db::AUTH_COOKIE_NAME));
     }
 
     protected function createDummyUser()
