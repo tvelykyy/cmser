@@ -109,7 +109,7 @@ Kohana::$config->attach(new Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-	// 'auth'       => MODPATH.'auth',       // Basic authentication
+	 'auth'       => MODPATH.'auth',       // Basic authentication
 	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
 	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
 	 'database'   => MODPATH.'database',    //Database access
@@ -124,12 +124,62 @@ Kohana::modules(array(
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
-Route::set('admin', 'admin(/<action>(/<ide>))')
-	->defaults(array(
-                'directory'  => 'Admin',
-		'controller' => 'admin',
-		'action'     => 'login',
-	));
+
+Route::set('admin-post', 'admin(/<action>)')
+    ->filter(function($route, $params, $request)
+    {
+        if ($request->method() !== HTTP_Request::POST)
+        {
+            return FALSE; // This route only matches POST requests
+        }
+    })
+    ->defaults(array(
+        'directory'  => 'Admin',
+        'controller' => 'adminPost'
+    ));
+
+
+Route::set('admin-get', 'admin(/<action>)')
+    ->defaults(array(
+        'directory'  => 'Admin',
+        'controller' => 'adminGet',
+        'action'     => 'login'
+    ));
+
+Route::set('admin-secured-post', 'sadmin(/<action>)')
+    ->filter(function($route, $params, $request)
+    {
+        if ($request->method() !== HTTP_Request::POST)
+        {
+            return FALSE; // This route only matches POST requests
+        }
+    })
+    ->filter(function($route, $params, $request)
+    {
+        if (!Auth::instance()->logged_in())
+        {
+            header('Location: ' . URL::base().'admin');
+            die();
+        }
+    })
+    ->defaults(array(
+        'directory'  => 'Admin',
+        'controller' => 'adminSecuredPost'
+    ));
+
+Route::set('admin-secured-get', 'sadmin(/<action>)')
+    ->filter(function($route, $params, $request)
+    {
+        if (!Auth::instance()->logged_in())
+        {
+            header('Location: ' . URL::base().'admin');
+            die();
+        }
+    })
+    ->defaults(array(
+        'directory'  => 'Admin',
+        'controller' => 'adminSecuredGet'
+    ));
 
 Route::set('dispatcher', '(<path>)', array('path' => '.*?'))
 	->defaults(array(

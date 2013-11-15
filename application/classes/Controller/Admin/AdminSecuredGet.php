@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Admin_Admin extends Controller 
+class Controller_Admin_AdminSecuredGet extends Controller
 {
     private $generator_html;
 
@@ -10,26 +10,29 @@ class Controller_Admin_Admin extends Controller
         $this->generator_html = new Generator_Html();
     }
 
-    public function action_login()
+    public function action_landing()
     {
-        $page = new stdClass();
-        $page->filepath = 'admin/skeleton.html';
-        $page->fields = array();
-        echo $this->generator_html->generate_html_by_filepath_and_params($page->filepath, $page->fields);
+        echo $this->generator_html->generate_html_by_filepath_and_params('admin/skeleton.html', array());
     }
-    
+
     public function action_pages()
     {
         $limit = $this->get_query_value_or_default_value('limit', 2);
         $page_model = new Model_Page();
         $pages = $page_model->get_pages(0, $limit);
-        $page = self::init_page('admin/pages.html', 
+        $page = self::init_page('admin/pages.html',
                 array('title' => 'Site Pages',
                     'pages' => $pages));
 
         echo $this->generator_html->generate_html_by_filepath_and_params($page->filepath, $page->fields);
     }
-    
+
+    public function action_logout()
+    {
+        Auth::instance()->logout();
+        $this->redirect('admin');
+    }
+
     private static function init_page($filepath, array $fields)
     {
         $page = new stdClass();
@@ -48,5 +51,5 @@ class Controller_Admin_Admin extends Controller
 
         return $query_param;
     }
-   
+
 }
