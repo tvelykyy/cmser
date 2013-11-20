@@ -68,7 +68,7 @@ class Auth_Db extends Auth
         Cookie::set(self::AUTH_COOKIE_NAME, $token, $this->_config['lifetime']);
     }
 
-    public function get_user()
+    public function get_user($default = NULL)
     {
         $user = parent::get_user(NULL);
         if ($user === NULL)
@@ -113,7 +113,7 @@ class Auth_Db extends Auth
         return sha1(Request::$user_agent);
     }
 
-    public function logout($destroy = FALSE)
+    public function logout($destroy = false, $logout_all = false)
     {
         if ($token = Cookie::get(self::AUTH_COOKIE_NAME))
         {
