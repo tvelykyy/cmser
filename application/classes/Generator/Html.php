@@ -36,13 +36,7 @@ class Generator_Html {
 
     public function generate_html_by_filepath_and_params($filepath, array $params)
     {
-        return $this->build_template($filepath, $params);
-    }
-
-    private function build_template($template, array $values)
-    {
-        $template = $this->twig->loadTemplate($template);
-        return $template->render($values);
+        return $this->twig->render($filepath, $params);
     }
 
 } // End Renderer

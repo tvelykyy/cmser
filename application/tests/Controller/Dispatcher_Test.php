@@ -23,7 +23,9 @@ class Controller_Dispatcher_Test extends Unittest_TestCase
             ->will($this->returnValue($dummy_page->fields));
         $dispatcher->set_snippet_resolver($mocked_snippet_resolver);
 
-        $mocked_generator_html = $this->getMock('Generator_Html');
+        $mocked_generator_html = $this->getMockBuilder('Generator_Html')
+            ->disableOriginalConstructor()
+            ->getMock();
         $mocked_generator_html->expects($this->once())
             ->method('generate_html_by_filepath_and_params')
             ->will($this->returnValue('html'));

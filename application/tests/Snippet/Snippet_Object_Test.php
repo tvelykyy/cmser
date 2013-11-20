@@ -43,7 +43,9 @@ class Snippet_Object_Test extends Unittest_TestCase
             ->method('get_all_pages_uri')
             ->will($this->returnValue(array(1)));
 
-        $mocked_generator_html = $this->getMock('Generator_Html');
+        $mocked_generator_html = $this->getMockBuilder('Generator_Html')
+            ->disableOriginalConstructor()
+            ->getMock();
         $mocked_generator_html->expects($this->once())
             ->method('generate_html_by_template_id_and_params')
             ->with(1, array('params' => array(1)))

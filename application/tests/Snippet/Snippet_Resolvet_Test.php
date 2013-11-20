@@ -11,7 +11,7 @@ class Snippet_Resolver_Test extends Unittest_TestCase
             ->will($this->returnValue('super_html'));
 
         $block = new stdClass;
-        $block->page_field_content = 'start [[Model_Page.get_all_pages_uri.2?above=0&less=5]] end';
+        $block->page_field_content = 'start [[snippet definition goes here]] end';
         $blocks = array($block);
 
         /* When. */
