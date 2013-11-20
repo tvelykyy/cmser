@@ -12,8 +12,7 @@ class Snippet_Resolver
 
             foreach ($snippets_str as $snippet_str)
             {
-                $snippet = Snippet_Object::from_string($snippet_str, $client_params);
-                $html = $snippet->generate_html();
+                $html = $this->generate_html_by_str_and_client_params($client_params, $snippet_str);
 
                 $block->page_field_content = preg_replace(
                     '/\\[\\['.preg_quote($snippet_str).'\\]\\]/',
@@ -41,5 +40,12 @@ class Snippet_Resolver
 
         return $snippets_str;
     }
-    
+
+    protected function generate_html_by_str_and_client_params($client_params, $snippet_str)
+    {
+        $snippet = new Snippet_Object($snippet_str, $client_params);
+        $html = $snippet->generate_html();
+        return $html;
+    }
+
 } // End Snippet

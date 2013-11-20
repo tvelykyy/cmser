@@ -8,7 +8,7 @@ class Snippet_Object
     private $params = array();
     private $generator_html;
 
-    public static function from_string($str, $client_params = NULL)
+    public function __construct($str, $client_params = NULL)
     {
         /* [[model.method.template_id?param1=value1&param2=value2...]] */
         $tokens = explode('?', $str);
@@ -37,11 +37,6 @@ class Snippet_Object
             $params[$key] = $value;
         }
 
-        return new Snippet_Object($model, $method, $template_id, $params);
-    }
-
-    public function __construct($model, $method, $template_id, $params)
-    {
         $this->model = $model;
         $this->method = $method;
         $this->params = $params;

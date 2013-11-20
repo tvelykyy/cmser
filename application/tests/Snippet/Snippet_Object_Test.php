@@ -9,7 +9,7 @@ class Snippet_Object_Test extends Unittest_TestCase
         $snippet_str = 'Model_Page.get_all_pages_uri.1?above=0&less=3';
 
         /* When. */
-        $snippet = Snippet_Object::from_string($snippet_str);
+        $snippet = new Snippet_Object($snippet_str);
 
         /* Then. */
         $this->assertNotNull($snippet);
@@ -25,7 +25,7 @@ class Snippet_Object_Test extends Unittest_TestCase
         $snippet_str = 'Model_Page.get_all_pages_uri.1?above={above}&less={less}';
 
         /* When. */
-        $snippet = Snippet_Object::from_string($snippet_str, array('above' =>  10, 'less' => 15));
+        $snippet = new Snippet_Object($snippet_str, array('above' =>  10, 'less' => 15));
 
         /* Then. */
         $this->assertNotNull($snippet);
@@ -49,8 +49,10 @@ class Snippet_Object_Test extends Unittest_TestCase
             ->with(1, array('params' => array(1)))
             ->will($this->returnValue('super_html'));
 
+        $snippet_str = 'Model_Page.get_all_pages_uri.1?above=0&less=3';
+
         /* Passing model as null to test setter. */
-        $snippet = new Snippet_Object(null, 'get_all_pages_uri', 1, array('above' => 0, 'less' => 3));
+        $snippet = new Snippet_Object($snippet_str);
         $snippet->set_generator_html($mocked_generator_html);
         $snippet->set_model($mocked_model_page);
 
