@@ -53,7 +53,7 @@ class Auth_Db extends Auth
         $encoded_user_agent = $this->get_encoded_user_agent();
         $token = $this->generate_token($user_email);
 
-        $this->model_user_token->insert_token($user_email, $encoded_user_agent, $token, $expires);
+        $this->model_user_token->insert($user_email, $encoded_user_agent, $token, $expires);
 
         return $token;
     }

@@ -3,7 +3,7 @@ defined('SYSPATH') or die('No direct script access.');
 
 class Model_UserToken extends Model_Database
 {
-    public function insert_token($user_email, $user_agent, $token, $expires)
+    public function insert($user_email, $user_agent, $token, $expires)
     {
         $query = DB::insert('user_token', array('user_email', 'user_agent', 'token', 'expires'))
             ->values(array($user_email, $user_agent, $token, $expires));
@@ -18,7 +18,7 @@ class Model_UserToken extends Model_Database
         $query = DB::select('id', 'user_email', 'user_agent', 'token', 'expires')
             ->from(array('user_token', 'u'))
             ->where('token', '=', $token)
-            ->as_object();;
+            ->as_object();
 
         $user_token = $query->execute($this->_db)->current();
 

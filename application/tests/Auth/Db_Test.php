@@ -58,7 +58,7 @@ class Auth_Db_Test extends Unittest_TestCase
     {
         $mocked_model_user = $this->getMock('Model_UserToken');
         $mocked_model_user->expects($this->once())
-            ->method('insert_token');
+            ->method('insert');
 
         return $mocked_model_user;
     }
