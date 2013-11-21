@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50534
 File Encoding         : 65001
 
-Date: 2013-11-15 18:35:56
+Date: 2013-11-21 13:17:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -110,3 +110,26 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('dummy@mail.com', '0f0a9a777952ceb5b629ec5a901df612c7bf2cd66a63ef2d80228d5557ca8dca', 'Dummy', '', null);
+
+-- ----------------------------
+-- Table structure for `user_token`
+-- ----------------------------
+DROP TABLE IF EXISTS `user_token`;
+CREATE TABLE `user_token` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_email` varchar(127) NOT NULL,
+  `user_agent` varchar(40) NOT NULL,
+  `token` varchar(40) NOT NULL,
+  `created` int(10) unsigned NOT NULL,
+  `expires` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_token` (`token`),
+  KEY `fk_user_email` (`user_email`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_token
+-- ----------------------------
+INSERT INTO `user_token` VALUES ('1', 'dummy@mail.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 'df4ed7297a2db98cec927647f46505d74ef75f8f', '0', '1385740031');
+INSERT INTO `user_token` VALUES ('2', 'dummy-2@mail.com', 'user_agent_2', 'token_2', '0', '1385740031');
+INSERT INTO `user_token` VALUES ('3', 'user_email_new', 'user_agent_new', 'token_new', '0', '1381234567');
