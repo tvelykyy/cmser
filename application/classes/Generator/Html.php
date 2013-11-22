@@ -30,13 +30,13 @@ class Generator_Html {
     public function generate_html_by_template_id_and_params($template_id, array $params)
     {
         $template = $this->model_template->get_template_by_id($template_id);
-        $filepath = $template->filepath;
-        return $this->generate_html_by_filepath_and_params($filepath, $params);
+        $path = $template->path;
+        return $this->generate_html_by_path_and_params($path, $params);
     }
 
-    public function generate_html_by_filepath_and_params($filepath, array $params)
+    public function generate_html_by_path_and_params($path, array $params)
     {
-        return $this->twig->render($filepath, $params);
+        return $this->twig->render($path, $params);
     }
 
 } // End Renderer

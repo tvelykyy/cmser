@@ -14,10 +14,10 @@ class Snippet_Resolver
             {
                 $html = $this->generate_html_by_str_and_client_params($client_params, $snippet_str);
 
-                $block->page_field_content = preg_replace(
+                $block->block_content = preg_replace(
                     '/\\[\\['.preg_quote($snippet_str).'\\]\\]/',
                     $html,
-                    $block->page_field_content
+                    $block->block_content
                 );
             }
             $resolved_blocks[] = $block;
@@ -28,7 +28,7 @@ class Snippet_Resolver
     private function get_snippets_str_from_page_block($block)
     {
         $snippets_str_matches = null;
-        preg_match_all('/\\[\\[(.*?)\\]\\]/', $block->page_field_content, $snippets_str_matches);
+        preg_match_all('/\\[\\[(.*?)\\]\\]/', $block->block_content, $snippets_str_matches);
 
         $snippets_str = array();
 

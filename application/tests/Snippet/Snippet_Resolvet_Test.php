@@ -11,14 +11,14 @@ class Snippet_Resolver_Test extends Unittest_TestCase
             ->will($this->returnValue('super_html'));
 
         $block = new stdClass;
-        $block->page_field_content = 'start [[snippet definition goes here]] end';
+        $block->block_content = 'start [[snippet definition goes here]] end';
         $blocks = array($block);
 
         /* When. */
         $actual_blocks = $mocked_snippet_resolved->resolve_snippets($blocks);
 
         /* Then. */
-        $this->assertEquals('start super_html end', $actual_blocks[0]->page_field_content);
+        $this->assertEquals('start super_html end', $actual_blocks[0]->block_content);
     }
 
     public function test_resolve_snippets_with_empty_block_array()

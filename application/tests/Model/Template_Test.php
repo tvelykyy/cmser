@@ -19,7 +19,7 @@ class Model_Template_Test extends Model_Base_Test
         $this->assertNotEmpty($template);
         $this->assertEquals(1, $template->id);
         $this->assertEquals('Main Template', $template->title);
-        $this->assertEquals('index.html', $template->filepath);
+        $this->assertEquals('index.html', $template->path);
     }
 
     public function test_get_template_by_id_for_non_existent_template()

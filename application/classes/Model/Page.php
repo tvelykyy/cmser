@@ -5,7 +5,7 @@ class Model_Page extends Model_Database
 {
     public function get_page_by_uri($uri)
     {
-        $query = DB::select('p.id', 't.filepath')
+        $query = DB::select('p.id', 't.path')
                 ->from(array('page', 'p'))
                 ->join(array('template', 't'), 'INNER')
                 ->on('p.template_id', '=', 't.id')
@@ -16,14 +16,14 @@ class Model_Page extends Model_Database
             
         if ($page) 
         {
-            $relation_query = DB::select('pf.title', 'ppf.page_field_content')
-                    ->from(array('page_page_field', 'ppf'))
-                    ->join(array('page_field', 'pf'), 'INNER')
-                    ->on('ppf.page_field_id', '=', 'pf.id')
+            $relation_query = DB::select('b.title', 'pb.block_content')
+                    ->from(array('page_block', 'pb'))
+                    ->join(array('block', 'b'), 'INNER')
+                    ->on('pb.block_id', '=', 'b.id')
                     ->where('page_id', '=', $page->id)
                     ->as_object();
 
-            $page->fields = $relation_query->execute($this->_db)->as_objects_array();
+            $page->blocks = $relation_query->execute($this->_db)->as_objects_array();
         }
         
         return $page;

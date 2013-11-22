@@ -10,11 +10,11 @@ class Helper_Array_Test extends Unittest_TestCase
 
         $array_object_1 = new stdClass;
         $array_object_1->title = 'DummyTitle1';
-        $array_object_1->page_field_content = 'DummyPageContent1';
+        $array_object_1->block_content = 'DummyPageContent1';
 
         $array_object_2 = new stdClass;
         $array_object_2->title = 'DummyTitle2';
-        $array_object_2->page_field_content = 'DummyPageContent2';
+        $array_object_2->block_content = 'DummyPageContent2';
 
         array_push($array_to_convert, $array_object_1);
         array_push($array_to_convert, $array_object_2);
@@ -51,7 +51,7 @@ class Helper_Array_Test extends Unittest_TestCase
         $array_to_pass = array();
         $array_object_1 = new stdClass();
         $array_object_1->other_title = 'DummyOtherTitle1';
-        $array_object_1->page_field_content = 'DummyPageContent1';
+        $array_object_1->block_content = 'DummyPageContent1';
 
         array_push($array_to_pass, $array_object_1);
 

@@ -18,7 +18,7 @@ class Controller_Admin_AdminGet extends Controller
         }
         else
         {
-            echo $this->generator_html->generate_html_by_filepath_and_params('admin/login.html', array());
+            echo $this->generator_html->generate_html_by_path_and_params('admin/login.html', array());
         }
     }
 

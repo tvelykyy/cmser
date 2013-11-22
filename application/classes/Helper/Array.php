@@ -4,7 +4,7 @@ class Helper_Array
 {
     /**
      * Converts example array
-     * Array ( [0] => stdClass Object ( [title] => MAIN_CONTENT [page_field_content] => some text. ) )
+     * Array ( [0] => stdClass Object ( [title] => MAIN_CONTENT [block_content] => some text. ) )
      * to
      * Array ( [MAIN_CONTENT] = > some text.
      */
@@ -18,7 +18,7 @@ class Helper_Array
             {
                 if (isset($field->title))
                 {
-                    $result_array[$field->title] = $field->page_field_content;
+                    $result_array[$field->title] = $field->block_content;
                 }
             }
             return $result_array;

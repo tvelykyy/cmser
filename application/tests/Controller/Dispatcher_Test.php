@@ -20,14 +20,14 @@ class Controller_Dispatcher_Test extends Unittest_TestCase
         $mocked_snippet_resolver = $this->getMock('Snippet_Resolver');
         $mocked_snippet_resolver->expects($this->once())
             ->method('resolve_snippets')
-            ->will($this->returnValue($dummy_page->fields));
+            ->will($this->returnValue($dummy_page->blocks));
         $dispatcher->set_snippet_resolver($mocked_snippet_resolver);
 
         $mocked_generator_html = $this->getMockBuilder('Generator_Html')
             ->disableOriginalConstructor()
             ->getMock();
         $mocked_generator_html->expects($this->once())
-            ->method('generate_html_by_filepath_and_params')
+            ->method('generate_html_by_path_and_params')
             ->will($this->returnValue('html'));
         $dispatcher->set_generator_html($mocked_generator_html);
 
@@ -68,11 +68,11 @@ class Controller_Dispatcher_Test extends Unittest_TestCase
     {
         $page = new stdClass();
         $page->id = 1;
-        $page->filepath = '/dummy/file/path';
-        $page_field = new stdClass();
-        $page_field->title = 'MAIN_TITLE';
-        $page_field->page_field_content = 'Some super content';
-        $page->fields = array($page_field);
+        $page->path = '/dummy/file/path';
+        $block = new stdClass();
+        $block->title = 'MAIN_TITLE';
+        $block->block_content = 'Some super content';
+        $page->blocks = array($block);
 
         return $page;
     }

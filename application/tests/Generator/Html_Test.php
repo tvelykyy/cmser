@@ -7,7 +7,7 @@ class Generator_Html_Test extends Unittest_TestCase
         /* Given. */
         $template_id = 1;
         $template = new stdClass();
-        $template->filepath = 'filepath';
+        $template->path = 'path';
 
         $params = array('fake', 'fake', 'fake');
 
@@ -17,11 +17,11 @@ class Generator_Html_Test extends Unittest_TestCase
             ->with($template_id)
             ->will($this->returnValue($template));
 
-        $mocked_generator_html = $this->getMock('Generator_Html', array('generate_html_by_filepath_and_params'),
+        $mocked_generator_html = $this->getMock('Generator_Html', array('generate_html_by_path_and_params'),
             array($mocked_model_template));
         $mocked_generator_html->expects($this->once())
-            ->method('generate_html_by_filepath_and_params')
-            ->with('filepath', $params)
+            ->method('generate_html_by_path_and_params')
+            ->with('path', $params)
             ->will($this->returnValue('html'));
 
         /* When. */

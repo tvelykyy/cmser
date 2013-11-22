@@ -12,7 +12,7 @@ class Controller_Admin_AdminSecuredGet extends Controller
 
     public function action_landing()
     {
-        echo $this->generator_html->generate_html_by_filepath_and_params('admin/skeleton.html', array());
+        echo $this->generator_html->generate_html_by_path_and_params('admin/skeleton.html', array());
     }
 
     public function action_pages()
@@ -24,7 +24,7 @@ class Controller_Admin_AdminSecuredGet extends Controller
                 array('title' => 'Site Pages',
                     'pages' => $pages));
 
-        echo $this->generator_html->generate_html_by_filepath_and_params($page->filepath, $page->fields);
+        echo $this->generator_html->generate_html_by_path_and_params($page->path, $page->fields);
     }
 
     public function action_logout()
@@ -33,10 +33,10 @@ class Controller_Admin_AdminSecuredGet extends Controller
         $this->redirect('admin');
     }
 
-    private static function init_page($filepath, array $fields)
+    private static function init_page($path, array $fields)
     {
         $page = new stdClass();
-        $page->filepath = $filepath;
+        $page->path = $path;
         $page->fields = $fields;
         return $page;
     }
