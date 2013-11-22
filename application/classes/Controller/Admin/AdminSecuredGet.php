@@ -20,11 +20,22 @@ class Controller_Admin_AdminSecuredGet extends Controller
         $limit = $this->get_query_value_or_default_value('limit', 2);
         $page_model = new Model_Page();
         $pages = $page_model->get_pages(0, $limit);
-        $page = self::init_page('admin/pages.html',
-                array('title' => 'Site Pages',
-                    'pages' => $pages));
 
-        echo $this->generator_html->generate_html_by_path_and_params($page->path, $page->fields);
+        echo $this->generator_html->generate_html_by_path_and_params(
+            'admin/pages.html',
+            array('title' => 'Site Pages', 'pages' => $pages)
+        );
+    }
+
+    public function action_blocks()
+    {
+        $model_block = new Model_Block();
+        $blocks = $model_block->get_all_blocks();
+
+        echo $this->generator_html->generate_html_by_path_and_params(
+            'admin/blocks.html',
+            array('title' => 'Blocks', 'blocks' => $blocks)
+        );
     }
 
     public function action_logout()
@@ -33,11 +44,11 @@ class Controller_Admin_AdminSecuredGet extends Controller
         $this->redirect('admin');
     }
 
-    private static function init_page($path, array $fields)
+    private static function init_page($path, array $blocks)
     {
         $page = new stdClass();
         $page->path = $path;
-        $page->fields = $fields;
+        $page->fields = $blocks;
         return $page;
     }
 

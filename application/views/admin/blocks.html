@@ -1,0 +1,27 @@
+{% extends "admin/skeleton.html" %}
+
+{% block main_content %}
+<div class="box-content">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for block in blocks %}
+            <tr>
+                <td>{{ block.id }}</td>
+                <td class="center">{{ block.title }}</td>
+                <td>
+                    <a class="btn btn-info" href="#"><i class="icon-edit icon-white"></i>Edit</a>
+                    <a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i>Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
