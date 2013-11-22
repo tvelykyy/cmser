@@ -9,10 +9,9 @@ class Model_Page extends Model_Database
                 ->from(array('page', 'p'))
                 ->join(array('template', 't'), 'INNER')
                 ->on('p.template_id', '=', 't.id')
-                ->where('p.uri', '=', $uri)
-                ->as_object();
+                ->where('p.uri', '=', $uri);
 
-        $page = $query->execute($this->_db)->current();
+        $page = $query->execute_for_object($this->_db);
             
         if ($page) 
         {
@@ -20,10 +19,9 @@ class Model_Page extends Model_Database
                     ->from(array('page_block', 'pb'))
                     ->join(array('block', 'b'), 'INNER')
                     ->on('pb.block_id', '=', 'b.id')
-                    ->where('page_id', '=', $page->id)
-                    ->as_object();
+                    ->where('page_id', '=', $page->id);
 
-            $page->blocks = $relation_query->execute($this->_db)->as_objects_array();
+            $page->blocks = $relation_query->execute_for_objects_array($this->_db);
         }
         
         return $page;
@@ -35,9 +33,7 @@ class Model_Page extends Model_Database
                 ->from('page')
                 ->where('id', '<', $less)
                 ->and_where('id', '>', $above)
-                ->as_object()
-                ->execute($this->_db)
-                ->as_objects_array();
+                ->execute_for_objects_array($this->db);
 
         return $uris;
     }

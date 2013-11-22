@@ -24,8 +24,8 @@ class Controller_Dispatcher extends Controller
 
         if ($page)
         {
-            $page->fields = $this->snippet_resolver->resolve_snippets($page->blocks, $query_params);
-            $page->fields = Helper_Array::convert_array_to_associative_array_for_page($page->blocks);
+            $page->blocks = $this->snippet_resolver->resolve_snippets($page->blocks, $query_params);
+            $page->blocks = Helper_Array::convert_array_to_associative_array_for_page($page->blocks);
 
             echo $this->generator_html->generate_html_by_path_and_params($page->path, $page->blocks);
         }
