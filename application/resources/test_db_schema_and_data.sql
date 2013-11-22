@@ -26,13 +26,6 @@ CREATE TABLE `block` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
--- Records of block
--- ----------------------------
-INSERT INTO `block` VALUES ('1', 'MAIN_CONTENT');
-INSERT INTO `block` VALUES ('2', 'HEADER');
-INSERT INTO `block` VALUES ('3', 'FOOTER');
-
--- ----------------------------
 -- Table structure for `page`
 -- ----------------------------
 DROP TABLE IF EXISTS `page`;
@@ -43,14 +36,6 @@ CREATE TABLE `page` (
   `template_id` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of page
--- ----------------------------
-INSERT INTO `page` VALUES ('1', '0', '/', '1');
-INSERT INTO `page` VALUES ('2', '1', '/news', '1');
-INSERT INTO `page` VALUES ('3', '1', '/stories', '1');
-INSERT INTO `page` VALUES ('4', '1', '/contacts', '1');
 
 -- ----------------------------
 -- Table structure for `page_block`
@@ -67,14 +52,6 @@ CREATE TABLE `page_block` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='Table represents mapping between page block and specific page.';
 
 -- ----------------------------
--- Records of page_block
--- ----------------------------
-INSERT INTO `page_block` VALUES ('1', '1', 'This is page content [[Model_Page.get_all_pages_uri.2?above=0&less=3]] contained in CONTENT block.');
-INSERT INTO `page_block` VALUES ('2', '1', 'This is news page.');
-INSERT INTO `page_block` VALUES ('2', '2', 'This is news page title.');
-INSERT INTO `page_block` VALUES ('2', '3', 'This is news page footer.');
-
--- ----------------------------
 -- Table structure for `role`
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
@@ -87,12 +64,6 @@ CREATE TABLE `role` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of role
--- ----------------------------
-INSERT INTO `role` VALUES ('1', 'admin', 'Administrative user, has access to everything.');
-INSERT INTO `role` VALUES ('2', 'user', 'Login privileges, granted after account confirmation');
-
--- ----------------------------
 -- Table structure for `template`
 -- ----------------------------
 DROP TABLE IF EXISTS `template`;
@@ -102,12 +73,6 @@ CREATE TABLE `template` (
   `path` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of template
--- ----------------------------
-INSERT INTO `template` VALUES ('1', 'Main Template', 'index.html');
-INSERT INTO `template` VALUES ('2', 'Uris', 'snippet/uris.html');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -125,11 +90,6 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
--- Records of user
--- ----------------------------
-INSERT INTO `user` VALUES ('dummy@mail.com', '0f0a9a777952ceb5b629ec5a901df612c7bf2cd66a63ef2d80228d5557ca8dca', 'Dummy', '', null);
-
--- ----------------------------
 -- Table structure for `user_role`
 -- ----------------------------
 DROP TABLE IF EXISTS `user_role`;
@@ -142,11 +102,6 @@ CREATE TABLE `user_role` (
   CONSTRAINT `user` FOREIGN KEY (`user_email`) REFERENCES `user` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of user_role
--- ----------------------------
-INSERT INTO `user_role` VALUES ('dummy@mail.com', '1');
 
 -- ----------------------------
 -- Table structure for `user_token`
@@ -163,10 +118,3 @@ CREATE TABLE `user_token` (
   UNIQUE KEY `uniq_token` (`token`),
   KEY `fk_user_email` (`user_email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of user_token
--- ----------------------------
-INSERT INTO `user_token` VALUES ('1', 'dummy@mail.com', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 'df4ed7297a2db98cec927647f46505d74ef75f8f', '0', '1385740031');
-INSERT INTO `user_token` VALUES ('2', 'dummy-2@mail.com', 'user_agent_2', 'token_2', '0', '1385740031');
-INSERT INTO `user_token` VALUES ('3', 'user_email_new', 'user_agent_new', 'token_new', '0', '1381234567');

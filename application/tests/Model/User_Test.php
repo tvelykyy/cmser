@@ -15,6 +15,9 @@ class Model_User_Test extends Model_Base_Test
     {
         parent::setUp();
         $this->model = new Model_User('test');
+        $this->runSchema('user-data.sql');
+        $this->runSchema('user-role-data.sql');
+        $this->runSchema('role-data.sql');
     }
 
     public function test_get_enabled_user_by_email_and_hashed_password()

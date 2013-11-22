@@ -8,6 +8,7 @@ class Model_Template_Test extends Model_Base_Test
     {
         parent::setUp();
         $this->model = new Model_Template('test');
+        $this->runSchema('template-data.sql');
     }
 
     public function test_get_template_by_id_for_existent_template()

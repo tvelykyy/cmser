@@ -19,7 +19,7 @@ class Model_UserToken_Test extends Model_Base_Test
     {
         parent::setUp();
         $this->model = new Model_UserToken('test');
-        $this->runSchema('data.sql');
+        $this->runSchema('user-token-data.sql');
     }
 
     public function test_get_by_token()

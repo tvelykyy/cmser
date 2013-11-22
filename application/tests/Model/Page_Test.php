@@ -8,6 +8,9 @@ class Model_Page_Test extends Model_Base_Test
     {
         parent::setUp();
         $this->model = new Model_Page('test');
+        $this->runSchema('page-data.sql');
+        $this->runSchema('block-data.sql');
+        $this->runSchema('page-block-data.sql');
     }
 
     public function test_get_pages_with_default_parameters()
