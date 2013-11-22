@@ -29,7 +29,7 @@ class Controller_Admin_AdminSecuredGet extends Controller
 
     public function action_logout()
     {
-        Auth::instance()->logout();
+        Auth::instance()->logout(TRUE);
         $this->redirect('admin');
     }
 

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50534
 File Encoding         : 65001
 
-Date: 2013-11-22 13:25:04
+Date: 2013-11-22 15:04:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -75,6 +75,24 @@ INSERT INTO `page_block` VALUES ('2', '2', 'This is news page title.');
 INSERT INTO `page_block` VALUES ('2', '3', 'This is news page footer.');
 
 -- ----------------------------
+-- Table structure for `role`
+-- ----------------------------
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(20) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_title` (`title`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of role
+-- ----------------------------
+INSERT INTO `role` VALUES ('1', 'admin', 'Administrative user, has access to everything.');
+INSERT INTO `role` VALUES ('2', 'user', 'Login privileges, granted after account confirmation');
+
+-- ----------------------------
 -- Table structure for `template`
 -- ----------------------------
 DROP TABLE IF EXISTS `template`;
@@ -110,6 +128,25 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('dummy@mail.com', '0f0a9a777952ceb5b629ec5a901df612c7bf2cd66a63ef2d80228d5557ca8dca', 'Dummy', '', null);
+
+-- ----------------------------
+-- Table structure for `user_role`
+-- ----------------------------
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role` (
+  `user_email` varchar(127) NOT NULL,
+  `role_id` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`user_email`,`role_id`),
+  UNIQUE KEY `unique_row` (`user_email`,`role_id`),
+  KEY `role` (`role_id`),
+  CONSTRAINT `user` FOREIGN KEY (`user_email`) REFERENCES `user` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_role
+-- ----------------------------
+INSERT INTO `user_role` VALUES ('dummy@mail.com', '1');
 
 -- ----------------------------
 -- Table structure for `user_token`

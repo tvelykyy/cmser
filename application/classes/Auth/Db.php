@@ -47,6 +47,11 @@ class Auth_Db extends Auth
         return FALSE;
     }
 
+    protected function set_auth_cookie($token)
+    {
+        Cookie::set(self::AUTH_COOKIE_NAME, $token, $this->_config['lifetime']);
+    }
+
     protected function generate_and_save_token_for_user($user_email)
     {
         $expires = time() + $this->_config['lifetime'];
@@ -63,9 +68,19 @@ class Auth_Db extends Auth
         return sha1((uniqid($unique_user_data, true)));
     }
 
-    protected function set_auth_cookie($token)
+    public function logged_in($role_id = NULL)
     {
-        Cookie::set(self::AUTH_COOKIE_NAME, $token, $this->_config['lifetime']);
+        $user = $this->get_user();
+
+        if (!$user)
+        {
+            return FALSE;
+        } else {
+            if (!$role_id)
+                return TRUE;
+
+            return $this->model_user->check_user_has_role($user->email, $role_id);
+        }
     }
 
     public function get_user($default = NULL)
@@ -95,6 +110,7 @@ class Auth_Db extends Auth
         return NULL;
     }
 
+    /* TODO split this function. */
     protected function set_updated_cookie($user_token)
     {
         $this->model_user_token->delete_by_id($user_token->id);
@@ -105,6 +121,7 @@ class Auth_Db extends Auth
 
         $user = $this->model_user->get_user_by_email($user_token->user_email);
         $this->complete_login($user);
+
         return $user;
     }
 

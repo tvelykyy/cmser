@@ -123,10 +123,10 @@ abstract class Kohana_Auth {
 	 * Check if there is an active session. Optionally allows checking for a
 	 * specific role.
 	 *
-	 * @param   string  $role  role name
+	 * @param   string  $role_id  role name
 	 * @return  mixed
 	 */
-	public function logged_in($role = NULL)
+	public function logged_in($role_id = NULL)
 	{
 		return ($this->get_user() !== NULL);
 	}

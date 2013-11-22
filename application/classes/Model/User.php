@@ -29,4 +29,17 @@ class Model_User extends Model_Database
         return $user;
     }
 
+    public function check_user_has_role($email, $role_id)
+    {
+        $query = DB::select(DB::expr(1))
+            ->from(array('user_role', 'ur'))
+            ->where('ur.user_email', '=', $email)
+            ->where('ur.role_id', '=', $role_id)
+            ->as_object();
+
+        $has_role = $query->execute($this->_db)->current();
+
+        return $has_role;
+    }
+
 }

@@ -12,10 +12,10 @@ class Kohana_Auth_ORM extends Auth {
 	/**
 	 * Checks if a session is active.
 	 *
-	 * @param   mixed    $role Role name string, role ORM object, or array with role names
+	 * @param   mixed    $role_id Role name string, role ORM object, or array with role names
 	 * @return  boolean
 	 */
-	public function logged_in($role = NULL)
+	public function logged_in($role_id = NULL)
 	{
 		// Get the user from the session
 		$user = $this->get_user();
@@ -26,27 +26,27 @@ class Kohana_Auth_ORM extends Auth {
 		if ($user instanceof Model_User AND $user->loaded())
 		{
 			// If we don't have a roll no further checking is needed
-			if ( ! $role)
+			if ( ! $role_id)
 				return TRUE;
 
-			if (is_array($role))
+			if (is_array($role_id))
 			{
 				// Get all the roles
 				$roles = ORM::factory('Role')
-							->where('name', 'IN', $role)
+							->where('name', 'IN', $role_id)
 							->find_all()
 							->as_array(NULL, 'id');
 
 				// Make sure all the roles are valid ones
-				if (count($roles) !== count($role))
+				if (count($roles) !== count($role_id))
 					return FALSE;
 			}
 			else
 			{
-				if ( ! is_object($role))
+				if ( ! is_object($role_id))
 				{
 					// Load the role
-					$roles = ORM::factory('Role', array('name' => $role));
+					$roles = ORM::factory('Role', array('name' => $role_id));
 
 					if ( ! $roles->loaded())
 						return FALSE;

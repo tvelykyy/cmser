@@ -12,7 +12,7 @@ class Controller_Admin_AdminGet extends Controller
 
     public function action_login()
     {
-        if (Auth::instance()->logged_in())
+        if (Auth::instance()->logged_in(1))
         {
             $this->redirect('sadmin/landing');
         }

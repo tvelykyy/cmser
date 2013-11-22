@@ -156,7 +156,7 @@ Route::set('admin-secured-post', 'sadmin(/<action>)')
     })
     ->filter(function($route, $params, $request)
     {
-        if (!Auth::instance()->logged_in())
+        if (!Auth::instance()->logged_in(1))
         {
             header('Location: ' . URL::base().'admin');
             die();
@@ -170,7 +170,7 @@ Route::set('admin-secured-post', 'sadmin(/<action>)')
 Route::set('admin-secured-get', 'sadmin(/<action>)')
     ->filter(function($route, $params, $request)
     {
-        if (!Auth::instance()->logged_in())
+        if (!Auth::instance()->logged_in(1))
         {
             header('Location: ' . URL::base().'admin');
             die();
