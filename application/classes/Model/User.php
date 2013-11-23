@@ -9,10 +9,9 @@ class Model_User extends Model_Database
             ->from(array('user', 'u'))
             ->where('u.email', '=', $email)
             ->where('u.password', '=', $hashed_password)
-            ->where('u.enabled', '=', 1)
-            ->as_object();
+            ->where('u.enabled', '=', 1);
 
-        $user = $query->execute($this->_db)->current();
+        $user = $this->execute_for_object($query);
 
         return $user;
     }
@@ -21,10 +20,9 @@ class Model_User extends Model_Database
     {
         $query = DB::select('u.email', 'u.password', 'u.username', 'u.enabled', 'u.last_login')
             ->from(array('user', 'u'))
-            ->where('u.email', '=', $email)
-            ->as_object();
+            ->where('u.email', '=', $email);
 
-        $user = $query->execute($this->_db)->current();
+        $user = $this->execute_for_object($query);
 
         return $user;
     }
@@ -34,10 +32,9 @@ class Model_User extends Model_Database
         $query = DB::select(DB::expr(1))
             ->from(array('user_role', 'ur'))
             ->where('ur.user_email', '=', $email)
-            ->where('ur.role_id', '=', $role_id)
-            ->as_object();
+            ->where('ur.role_id', '=', $role_id);
 
-        $has_role = $query->execute($this->_db)->current();
+        $has_role = $this->execute_for_object($query);
 
         return $has_role;
     }

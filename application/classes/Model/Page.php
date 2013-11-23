@@ -11,7 +11,7 @@ class Model_Page extends Model_Database
                 ->on('p.template_id', '=', 't.id')
                 ->where('p.uri', '=', $uri);
 
-        $page = $query->execute_for_object($this->_db);
+        $page = $this->execute_for_object($query);
             
         if ($page) 
         {
@@ -21,7 +21,7 @@ class Model_Page extends Model_Database
                     ->on('pb.block_id', '=', 'b.id')
                     ->where('page_id', '=', $page->id);
 
-            $page->blocks = $relation_query->execute_for_objects_array($this->_db);
+            $page->blocks = $this->execute_for_objects_array($relation_query);
         }
         
         return $page;
@@ -29,25 +29,23 @@ class Model_Page extends Model_Database
     
     public function get_all_pages_uri($above, $less)
     {
-        $uris = DB::select('uri')
+        $query = DB::select('uri')
                 ->from('page')
                 ->where('id', '<', $less)
-                ->and_where('id', '>', $above)
-                ->execute_for_objects_array($this->db);
+                ->and_where('id', '>', $above);
 
+        $uris = $this->execute_for_objects_array($query);
         return $uris;
     }
     
     public function get_pages($offset = 0, $limit = 1)
     {
-        $uris = DB::select('id', 'parent_id', 'uri', 'template_id')
+        $query = DB::select('id', 'parent_id', 'uri', 'template_id')
                 ->from('page')
                 ->offset($offset)
-                ->limit($limit)
-                ->as_object()
-                ->execute($this->_db)
-                ->as_objects_array();
+                ->limit($limit);
 
+        $uris = $this->execute_for_objects_array($query);
         return $uris;
     }
 }

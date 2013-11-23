@@ -17,10 +17,9 @@ class Model_UserToken extends Model_Database
     {
         $query = DB::select('id', 'user_email', 'user_agent', 'token', 'expires')
             ->from(array('user_token', 'u'))
-            ->where('token', '=', $token)
-            ->as_object();
+            ->where('token', '=', $token);
 
-        $user_token = $query->execute($this->_db)->current();
+        $user_token = $this->execute_for_object($query);
 
         return $user_token;
     }

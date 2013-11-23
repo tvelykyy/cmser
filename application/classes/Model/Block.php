@@ -7,10 +7,9 @@ class Model_Block extends Model_Database
     {
         $query = DB::select('b.id', 'b.title')
                 ->from(array('block', 'b'))
-                ->where('b.id', '=', $id)
-                ->as_object();
+                ->where('b.id', '=', $id);
 
-        $block = $query->execute($this->_db)->current();
+        $block = $this->execute_for_object($query);
         
         return $block;
     }
@@ -18,10 +17,9 @@ class Model_Block extends Model_Database
     public function get_all_blocks()
     {
         $query = DB::select('b.id', 'b.title')
-            ->from(array('block', 'b'))
-            ->as_object();
+            ->from(array('block', 'b'));
 
-        $blocks = $query->execute($this->_db);
+        $blocks = $this->execute_for_objects_array($query);
 
         return $blocks;
     }

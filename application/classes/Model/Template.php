@@ -7,9 +7,10 @@ class Model_Template extends Model_Database
     {
         $query = DB::select('id', 'title', 'path')
                 ->from('template')
-                ->where('id', '=', $id)
-                ->as_object();
+                ->where('id', '=', $id);
 
-        return $query->execute($this->_db)->current();
+        $template = $this->execute_for_object($query);
+
+        return $template;
     }
 }
