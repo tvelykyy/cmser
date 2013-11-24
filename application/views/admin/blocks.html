@@ -23,5 +23,44 @@
             {% endfor %}
         </tbody>
     </table>
+    <a id="add-block-button" class="btn btn-success" href="#"><i class="icon-plus-sign icon-white"></i>Add</a>
 </div>
+
+<div class="modal hide fade" id="myModal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Add Block</h3>
+    </div>
+    <div class="modal-body">
+        <form id= "save-block-form" class="form-horizontal">
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="focusedInput">Block Title</label>
+                    <div class="controls">
+                        <input name="title" id="focusedInput" class="input-xlarge focused" type="text" value="">
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <a id="save-block-btn" href="#" class="btn btn-success">Save changes</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    $('#add-block-button').click(function(e){
+        e.preventDefault();
+        $('#myModal').modal('show');
+    });
+
+    $('#save-block-btn').click(function(e){
+        $.ajax({
+            type: 'POST',
+            url: '{{ baseurl }}/sadmin/block',
+            data: $('#save-block-form').serialize()
+        });
+    });
 {% endblock %}

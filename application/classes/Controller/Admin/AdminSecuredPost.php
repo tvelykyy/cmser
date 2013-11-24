@@ -10,4 +10,10 @@ class Controller_Admin_AdminSecuredPost extends Controller
         $this->generator_html = new Generator_Html();
     }
 
+    public function action_block()
+    {
+        $title = $this->request->post('title');
+        echo $title;
+    }
+
 }
