@@ -31,6 +31,10 @@ class Model_Block extends Model_Database
 
     public function create($title)
     {
+        $query = DB::insert('block', array('title'))
+            ->values(array($title));
+
+        $this->execute($query);
 
     }
 

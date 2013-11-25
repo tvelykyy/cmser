@@ -16,8 +16,8 @@
                 <td>{{ block.id }}</td>
                 <td class="center">{{ block.title }}</td>
                 <td>
-                    <a class="btn btn-info" href="#"><i class="icon-edit icon-white"></i>Edit</a>
-                    <a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i>Delete</a>
+                    <a block-id="{{block.id}}" class="btn btn-info edit" href="#"><i class="icon-edit icon-white"></i>Edit</a>
+                    <a block-id="{{block.id}}" class="btn btn-danger delete" href="#"><i class="icon-trash icon-white"></i>Delete</a>
                 </td>
             </tr>
             {% endfor %}
@@ -35,9 +35,10 @@
         <form id= "save-block-form" class="form-horizontal">
             <fieldset>
                 <div class="control-group">
+                    <input name="id" type="hidden" type="text">
                     <label class="control-label" for="focusedInput">Block Title</label>
                     <div class="controls">
-                        <input name="title" id="focusedInput" class="input-xlarge focused" type="text" value="">
+                        <input name="title" id="focusedInput" class="input-xlarge focused" type="text">
                     </div>
                 </div>
             </fieldset>
@@ -57,10 +58,21 @@
     });
 
     $('#save-block-btn').click(function(e){
+        e.preventDefault();
         $.ajax({
             type: 'POST',
             url: '{{ baseurl }}/sadmin/block',
-            data: $('#save-block-form').serialize()
+            data: $('#save-block-form').serialize(),
+            success: function(data) {
+                $('#myModal').modal('hide');
+            }
         });
+    });
+
+    $('.edit').click(function(e){
+        e.preventDefault();
+        $('#save-block-form [name="id"]').val(5);
+        $('#save-block-form [name="title"]').val($(this).attr('title'));
+        $('#myModal').modal('show');
     });
 {% endblock %}

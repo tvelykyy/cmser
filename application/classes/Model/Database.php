@@ -11,4 +11,9 @@ abstract class Model_Database extends Kohana_Model_Database
     {
         return $query->execute_for_objects_array($this->_db);
     }
+
+    public function execute($query)
+    {
+        $query->execute($this->_db);
+    }
 }

@@ -8,7 +8,7 @@ class Model_UserToken extends Model_Database
         $query = DB::insert('user_token', array('user_email', 'user_agent', 'token', 'expires'))
             ->values(array($user_email, $user_agent, $token, $expires));
 
-        $result = $query->execute($this->_db);
+        $result = $this->execute($query);
 
         return $result;
     }
@@ -29,7 +29,7 @@ class Model_UserToken extends Model_Database
         $query = DB::delete('user_token')
             ->where('id', '=', $id);
 
-        $query->execute($this->_db);
+        $this->execute($query);
     }
 
     public function delete_by_token($token)
@@ -37,7 +37,7 @@ class Model_UserToken extends Model_Database
         $query = DB::delete('user_token')
             ->where('token', '=', $token);
 
-        $query->execute($this->_db);
+        $this->execute($query);
     }
 
 }
