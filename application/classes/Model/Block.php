@@ -40,7 +40,11 @@ class Model_Block extends Model_Database
 
     public function edit($id, $title)
     {
+        $query = DB::update('block')
+            ->set(array('login_count' => $title))
+            ->where('id', '=', $id);
 
+        $this->execute($query);
     }
 
 }

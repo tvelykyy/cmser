@@ -14,9 +14,16 @@ class Controller_Admin_AdminSecuredPost extends Controller
 
     public function action_block()
     {
+        $id = $this->request->post('id');
         $title = $this->request->post('title');
 
-        $this->model_block->create($title);
+        if ($id)
+        {
+            $this->model_block->edit($id, $title);
+        } else
+        {
+            $this->model_block->create($title);
+        }
     }
 
 }
