@@ -10,20 +10,18 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
-            {% for block in blocks %}
+        <tbody data-bind="foreach: blocks">
             <tr>
-                <td>{{ block.id }}</td>
-                <td class="center">{{ block.title }}</td>
+                <td data-bind="text: id"></td>
+                <td data-bind="text: title" class="center"></td>
                 <td>
-                    <a block-id="{{block.id}}" class="btn btn-info edit" href="#"><i class="icon-edit icon-white"></i>Edit</a>
-                    <a block-id="{{block.id}}" class="btn btn-danger delete" href="#"><i class="icon-trash icon-white"></i>Delete</a>
+                    <a class="btn btn-info edit" href="javascript:;"><i class="icon-edit icon-white"></i>Edit</a>
+                    <a class="btn btn-danger delete" href="javascript:;"><i class="icon-trash icon-white"></i>Delete</a>
                 </td>
             </tr>
-            {% endfor %}
         </tbody>
     </table>
-    <a id="add-block-button" class="btn btn-success" href="#"><i class="icon-plus-sign icon-white"></i>Add</a>
+    <a id="add-block-button" data-bind="click: clearAndShowModalDialog" class="btn btn-success" href="javascript:;"><i class="icon-plus-sign icon-white"></i>Add</a>
 </div>
 
 <div class="modal hide fade" id="myModal">
@@ -35,30 +33,29 @@
         <form id= "save-block-form" class="form-horizontal">
             <fieldset>
                 <div class="control-group">
-                    <input name="id" type="hidden" type="text">
+                    <input name="id" type="hidden" type="text" data-bind="value: selectedBlock.id">
                     <label class="control-label" for="focusedInput">Block Title</label>
                     <div class="controls">
-                        <input name="title" id="focusedInput" class="input-xlarge focused" type="text">
+                        <input name="title" id="focusedInput" class="input-xlarge focused" type="text" data-bind="value: selectedBlock.title">
                     </div>
                 </div>
             </fieldset>
         </form>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">Close</a>
-        <a id="save-block-btn" href="#" class="btn btn-success">Save changes</a>
+        <a href="javascript:;" class="btn" data-dismiss="modal">Close</a>
+        <a id="save-block-btn" href="javascript:;" class="btn btn-success">Save changes</a>
     </div>
 </div>
 {% endblock %}
 
 {% block js %}
-    $('#add-block-button').click(function(e){
-        e.preventDefault();
+<script>
+    /*$('#add-block-button').click(function(e){
         $('#myModal').modal('show');
     });
 
     $('#save-block-btn').click(function(e){
-        e.preventDefault();
         $.ajax({
             type: 'POST',
             url: '{{ baseurl }}/sadmin/block',
@@ -70,9 +67,38 @@
     });
 
     $('.edit').click(function(e){
-        e.preventDefault();
         $('#save-block-form [name="id"]').val(5);
         $('#save-block-form [name="title"]').val($(this).attr('title'));
         $('#myModal').modal('show');
-    });
+    });*/
+
+    var initialData = [
+        {% for block in blocks %}
+            {id: {{block.id}}, title: '{{block.title}}'},
+        {% endfor %}
+    ];
+
+    var blockModel = function(blocks) {
+        var self = this;
+
+        self.blocks = ko.observableArray(ko.utils.arrayMap(blocks, function(block) {
+            return { id: block.id, title: block.title};
+        }));
+
+        self.selectedBlock = {
+            id: ko.observable(123),
+            title: ko.observable('Bob')
+        };
+
+        self.clearModalDialog = function() {
+            this.selectedBlock.id(null);
+            this.selectedBlock.title('');
+        };
+        self.clearAndShowModalDialog = function() {
+            $('#myModal').modal('show');
+            this.clearModalDialog();
+        }
+    };
+    ko.applyBindings(blockModel(initialData));
+</script>
 {% endblock %}
