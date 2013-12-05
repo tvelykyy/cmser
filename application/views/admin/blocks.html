@@ -29,14 +29,14 @@
         <button type="button" class="close" data-dismiss="modal">×</button>
         <h3>Add Block</h3>
     </div>
-    <div class="modal-body" >
+    <div class="modal-body" data-bind="with: selectedBlock">
         <form id= "save-block-form" class="form-horizontal">
             <fieldset>
                 <div class="control-group">
-                    <input name="id" type="hidden" type="text" data-bind="value: selectedBlock.id">
+                    <input name="id" type="hidden" type="text" data-bind="value: id">
                     <label class="control-label" for="focusedInput">Block Title</label>
                     <div class="controls">
-                        <input name="title" id="focusedInput" class="input-xlarge focused" type="text" data-bind="value: selectedBlock.title">
+                        <input name="title" id="focusedInput" class="input-xlarge focused" type="text" data-bind="value: title">
                     </div>
                 </div>
             </fieldset>
@@ -51,36 +51,46 @@
 
 {% block js %}
 <script>
+
+    var Block = function(id, title) {
+//        this.id = ko.protectedObservable(id);
+//        this.title = ko.protectedObservable(title);
+        this.id = ko.observable(id);
+        this.title = ko.observable(title);
+    }
+
     var initialData = [
         {% for block in blocks %}
-            {id: {{block.id}}, title: '{{block.title}}'},
+            new Block({{block.id}}, '{{block.title}}'),
         {% endfor %}
     ];
 
-    var blockModel = function(blocks) {
+    var BlockModel = function(blocks) {
         var self = this;
 
-        self.blocks = ko.mapping.fromJS(blocks);
+//        self.blocks = ko.mapping.fromJS(blocks);
+        self.blocks = ko.observableArray(blocks);
 
         self.selectedBlock = ko.observable();
+        self.selectedBlock(new Block());
 
         self.clearModalDialog = function() {
-            this.selectedBlock = ko.observable();
+            self.selectedBlock(new Block());
         };
 
         self.clearAndShowModalDialog = function() {
+            self.clearModalDialog();
             $('#myModal').modal('show');
-//            this.clearModalDialog();
         };
 
         self.saveBlock = function() {
             $.ajax({
                 type: 'POST',
                 url: '{{ baseurl }}/sadmin/block',
-                data: ko.toJS(self.selectedBlock),
+                data: ko.toJS(self.selectedBlock()),
                 success: function(data) {
-                    if (!self.selectedBlock().id) {
-                        self.blocks.push(self.selectedBlock);
+                    if (!self.selectedBlock().id()) {
+                        self.blocks.push(self.selectedBlock());
                     }
                     $('#myModal').modal('hide');
                 }
@@ -93,7 +103,7 @@
             $('#myModal').modal('show');
         };
     };
-    var vm = new blockModel(initialData);
+    var vm = new BlockModel(initialData);
     ko.applyBindings(vm);
 </script>
 {% endblock %}
