@@ -19,11 +19,14 @@ class Controller_Admin_AdminSecuredPost extends Controller
 
         if ($id)
         {
-            $this->model_block->edit($id, $title);
+            $result = $this->model_block->edit($id, $title);
         } else
         {
-            $this->model_block->create($title);
+            $result = $this->model_block->create($title);
         }
+
+        $this->response->headers('Content-Type','application/json');
+        echo json_encode($result);
     }
 
 }

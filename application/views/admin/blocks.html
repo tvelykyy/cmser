@@ -68,7 +68,6 @@
     var BlockModel = function(blocks) {
         var self = this;
 
-//        self.blocks = ko.mapping.fromJS(blocks);
         self.blocks = ko.observableArray(blocks);
 
         self.selectedBlock = ko.observable();
@@ -103,7 +102,7 @@
             $('#myModal').modal('show');
         };
     };
-    var vm = new BlockModel(initialData);
-    ko.applyBindings(vm);
+
+    ko.applyBindings(new BlockModel(initialData));
 </script>
 {% endblock %}

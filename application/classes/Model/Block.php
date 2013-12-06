@@ -34,7 +34,8 @@ class Model_Block extends Model_Database
         $query = DB::insert('block', array('title'))
             ->values(array($title));
 
-        $this->execute($query);
+        $result = $this->execute($query);
+        return $result[0];
 
     }
 
