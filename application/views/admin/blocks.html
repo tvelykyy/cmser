@@ -16,7 +16,7 @@
                 <td data-bind="text: title" class="center"></td>
                 <td>
                     <a data-bind="click: $parent.editBlock" class="btn btn-info edit" href="javascript:;"><i class="icon-edit icon-white"></i>Edit</a>
-                    <a class="btn btn-danger delete" href="javascript:;"><i class="icon-trash icon-white"></i>Delete</a>
+                    <a data-bind="click: $parent.deleteBlock" class="btn btn-danger delete" href="javascript:;"><i class="icon-trash icon-white"></i>Delete</a>
                 </td>
             </tr>
         </tbody>
@@ -53,8 +53,6 @@
 <script>
 
     var Block = function(id, title) {
-//        this.id = ko.protectedObservable(id);
-//        this.title = ko.protectedObservable(title);
         this.id = ko.observable(id);
         this.title = ko.observable(title);
     }
@@ -88,12 +86,35 @@
                 url: '{{ baseurl }}/sadmin/block',
                 data: ko.toJS(self.selectedBlock()),
                 success: function(data) {
+                    $('#myModal').modal('hide');
                     if (!self.selectedBlock().id()) {
+                        self.selectedBlock().id(data);
                         self.blocks.push(self.selectedBlock());
                     }
-                    $('#myModal').modal('hide');
                 }
             });
+        };
+
+        self.deleteBlock = function(block) {
+            if (confirm('Sure?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ baseurl }}/sadmin/deleteblock',
+                    data: {
+                        'id' : block.id()
+                    },
+                    success: function() {
+                        self.blocks.remove(block);
+                    },
+                    error: function(data) {
+                        noty({
+                            text: data.statusText,
+                            type: 'error',
+                            layout: 'center'
+                        })
+                    }
+                });
+            }
         };
 
         self.editBlock = function(block) {

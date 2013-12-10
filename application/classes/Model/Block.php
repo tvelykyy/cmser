@@ -26,7 +26,10 @@ class Model_Block extends Model_Database
 
     public function delete_by_id($id)
     {
+        $query = DB::delete('block')
+            ->where('id', '=', $id);
 
+        $this->execute($query);
     }
 
     public function create($title)

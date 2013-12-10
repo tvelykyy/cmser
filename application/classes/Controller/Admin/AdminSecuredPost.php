@@ -25,8 +25,14 @@ class Controller_Admin_AdminSecuredPost extends Controller
             $result = $this->model_block->create($title);
         }
 
-        $this->response->headers('Content-Type','application/json');
-        echo json_encode($result);
+        echo $this->prepare_json_response($result);
+    }
+
+    public function action_deleteblock()
+    {
+        $id_to_delete = $this->request->post('id');
+
+        $this->model_block->delete_by_id($id_to_delete);
     }
 
 }
